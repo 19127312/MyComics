@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "856131612089",
+    "firebase_url": "https://ggrm-2d70b-default-rtdb.firebaseio.com",
+    "project_id": "ggrm-2d70b",
+    "storage_bucket": "ggrm-2d70b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856131612089:android:588eb1c7559712a2ce5a68",
+        "android_client_info": {
+          "package_name": "com.khtn.ratevid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856131612089-h7voakmc0c8uk5bpn2483fh6cp0ufa9t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.khtn.ratevid",
+            "certificate_hash": "ad036ed9829743f41562fffa384a8293cb65def1"
+          }
+        },
+        {
+          "client_id": "856131612089-qk589kkt408u8cv6pl1t8fct7pu3vgti.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnOaw7aeQRQHOOSL5ILOmqPcX-vUC_B2s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856131612089-qk589kkt408u8cv6pl1t8fct7pu3vgti.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -24,17 +24,22 @@ class RegisterActivity : AppCompatActivity() {
             }else if(TextUtils.isEmpty(emailRegisterET.text.toString())){
                 emailRegisterET.setError("Please enter email")
                 return@setOnClickListener
+            }else if(TextUtils.isEmpty(userNameET.text.toString())){
+                emailRegisterET.setError("Please user name")
+                return@setOnClickListener
             }
 
-            register(emailRegisterET.text.toString(),passwordET.text.toString())
+            register(emailRegisterET.text.toString(),passwordET.text.toString(),userNameET.text.toString())
         }
     }
 
-    fun register( _email:String,_password:String){
+    fun register( _email:String,_password:String,_name:String){
         auth= FirebaseAuth.getInstance()
         databaseReference= FirebaseDatabase.getInstance().reference.child("profile")
         var email=_email.trim { it<= ' ' }
         var pass=_password.trim{ it<= ' '}
+        var name=_name.trim{ it<= ' '}
+
         auth.createUserWithEmailAndPassword(email,pass)
             //Neu tao duoc thanh cong
             .addOnCompleteListener{
@@ -45,15 +50,13 @@ class RegisterActivity : AppCompatActivity() {
                     //Dua thong tin co ban luc resgister vao database instance
                     currentUserDB?.child("Email")?.setValue(email)
                     currentUserDB?.child("UID")?.setValue(currentUser?.uid!!)
-                    currentUserDB?.child("UserName")?.setValue("Tuong")
+                    currentUserDB?.child("UserName")?.setValue(name)
+                    currentUserDB?.child("Type")?.setValue("User")
+                    finish()
 
                     //Thong bao tao thanh cong
-                    Toast.makeText(parent,"Registration succesfully!", Toast.LENGTH_LONG).show()
-                    finish()
                 }else{
                     //Neu khong tao duoc thi tao bang thong bao
-                    Toast.makeText(parent,"Registration failed, please try again!",
-                        Toast.LENGTH_LONG).show()
                 }
             }
     }

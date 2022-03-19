@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.AddVideoActivity">
+    <EditText
+        android:id="@+id/titleEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:inputType="textPersonName|textCapSentences"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:hint="Movie Name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <FrameLayout
+        android:id="@+id/videoView1"
+
+        android:layout_width="413dp"
+        android:layout_height="203dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleEt">
+
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/titleEt"
+            app:layout_constraintEnd_toEndOf="@+id/titleEt"
+            app:layout_constraintStart_toStartOf="@+id/titleEt"
+            app:layout_constraintTop_toBottomOf="@+id/titleEt" />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/UploadButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="#FF0000"
+        android:text="Upload Video"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/radioGroup"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/PickVideoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+
+        android:layout_marginTop="72dp"
+        app:backgroundTint="#FF0000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/UploadButton"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/UploadButton"
+        app:layout_constraintTop_toBottomOf="@+id/UploadButton"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_video_library" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="411dp"
+        android:layout_height="98dp"
+        app:layout_constraintTop_toBottomOf="@+id/videoView1"
+        tools:layout_editor_absoluteX="1dp">
+        android:id="@+id/radioGroup"
+
+        <RadioButton
+            android:id="@+id/radio1"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Review"
+            tools:layout_editor_absoluteX="2dp"
+            tools:layout_editor_absoluteY="422dp" />
+
+        <RadioButton
+            android:id="@+id/radio2"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Trailer"
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="354dp" />
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

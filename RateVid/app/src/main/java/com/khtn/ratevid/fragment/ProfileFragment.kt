@@ -16,16 +16,7 @@ import com.khtn.ratevid.activity.LoginActivity
 import kotlinx.android.synthetic.main.change_password_dialog.view.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProfileFragment : Fragment() {
     lateinit var auth: FirebaseAuth
     var databaseReference: DatabaseReference?=null
@@ -50,7 +41,7 @@ class ProfileFragment : Fragment() {
         user= auth.currentUser!!
     }
     fun loadProfile(){
-        val userReference= databaseReference?.child(user?.uid!!)?.child("username")?.addListenerForSingleValueEvent(
+        val userReference= databaseReference?.child(user?.uid!!)?.child("UserName")?.addListenerForSingleValueEvent(
             object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     infor.text=snapshot.getValue().toString()

@@ -5,13 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".fragment.RankingFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/videoRanking"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        tools:listitem="@layout/item_ranking"></androidx.recyclerview.widget.RecyclerView>
 
 
 </FrameLayout>

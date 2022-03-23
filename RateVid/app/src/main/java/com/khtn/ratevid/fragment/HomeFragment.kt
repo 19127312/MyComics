@@ -9,9 +9,7 @@ import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.khtn.ratevid.R
-import com.khtn.ratevid.activity.AddVideoActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -30,13 +28,12 @@ class HomeFragment (type: String): Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        AddVideo()
+        AddImage()
     }
-    fun AddVideo(){
+    fun AddImage(){
         AddButton.setOnClickListener {
-            val intent= Intent(context, AddVideoActivity::class.java)
-            intent.putExtra("type",typeUser)
-            startActivity(intent)
+            //val intent= Intent(context, AddChapter::class.java)
+            //startActivity(intent)
         }
     }
 

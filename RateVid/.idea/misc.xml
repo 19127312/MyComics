@@ -16,7 +16,7 @@
         <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/drawable/ic_profile.xml" value="0.209" />
         <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/drawable/ic_ranking.xml" value="0.209" />
         <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/drawable/ic_video_library.xml" value="0.209" />
-        <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/layout/activity_add_chapter.xml" value="0.5" />
+        <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/layout/activity_add_chapter.xml" value="0.22" />
         <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/layout/activity_add_comic.xml" value="0.5" />
         <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/layout/activity_add_video.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/layout/activity_forget_password.xml" value="0.36666666666666664" />
@@ -27,7 +27,7 @@
         <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/layout/fragment_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/layout/fragment_ranking.xml" value="0.35104166666666664" />
-        <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/layout/item_chosen.xml" value="0.26132246376811596" />
+        <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/layout/item_chosen.xml" value="0.33" />
         <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/layout/item_ranking.xml" value="0.33" />
         <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/layout/ranking_item.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/layout/row.xml" value="0.22" />

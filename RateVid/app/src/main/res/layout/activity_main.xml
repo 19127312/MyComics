@@ -26,20 +26,19 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Home"
+
+
             android:icon="@drawable/ic_home"
             />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Analyst"
             android:icon="@drawable/ic_ranking"
             />
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Profile"
             android:icon="@drawable/ic_profile"
             />
     </com.google.android.material.tabs.TabLayout>

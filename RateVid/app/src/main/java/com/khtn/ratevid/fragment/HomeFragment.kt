@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.khtn.ratevid.R
-import com.khtn.ratevid.activity.AddChapter
+import com.khtn.ratevid.activity.AddComic
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -43,7 +43,7 @@ class HomeFragment (type: String): Fragment() {
 
     fun AddImage(){
         AddButton.setOnClickListener {
-            val intent= Intent(context, AddChapter::class.java)
+            val intent= Intent(context, AddComic::class.java)
             startActivity(intent)
         }
     }

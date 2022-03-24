@@ -1,9 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.AddComic">
+    tools:layout_editor_absoluteX="242dp"
+    tools:layout_editor_absoluteY="96dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".activity.AddComic">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:text="Name"
+            android:textColor="@color/TEXT_VIEW"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/mangaNameET"
+            android:layout_width="340dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bd_et"
+            android:ems="10"
+            android:hint="Enter comic's/manga's name"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Author"
+            android:textColor="@color/TEXT_VIEW"
+            app:layout_constraintStart_toStartOf="@+id/mangaNameET"
+            app:layout_constraintTop_toBottomOf="@+id/mangaNameET" />
+
+        <EditText
+            android:id="@+id/authorNameET"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bd_et"
+            android:ems="10"
+
+            android:hint="Enter author's name"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <Button
+            android:id="@+id/thumbnailBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/ADD_Btn"
+            android:text="Choose thumbnail"
+            app:layout_constraintStart_toStartOf="@+id/desET"
+            app:layout_constraintTop_toBottomOf="@+id/desET" />
+
+        <ImageView
+            android:id="@+id/thumbnailView"
+            android:layout_width="355dp"
+            android:layout_height="325dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/thumbnailBtn"
+            app:layout_constraintTop_toBottomOf="@+id/thumbnailBtn"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <Button
+            android:id="@+id/upComicBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/UPLOAD_Btn"
+            android:text="Upload"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/thumbnailView"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Description"
+            app:layout_constraintStart_toStartOf="@+id/authorNameET"
+            app:layout_constraintTop_toBottomOf="@+id/authorNameET" />
+
+        <EditText
+            android:id="@+id/desET"
+            android:layout_width="341dp"
+            android:layout_height="197dp"
+            android:layout_marginTop="12dp"
+            android:ems="10"
+            android:background="@drawable/bd_et"
+
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            app:layout_constraintStart_toStartOf="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

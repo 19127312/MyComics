@@ -8,5 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="tabBackGroundColor">#7F9DAA</color>
-
+    <color name="UPLOAD_Btn" > #57AF57</color>
+    <color name="DELETE_Btn" > #CE4F4B</color>
+    <color name="ADD_Btn">#56B6D3</color>
 </resources>

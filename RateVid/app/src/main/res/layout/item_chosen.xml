@@ -21,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="88dp"
+    android:backgroundTint="@color/UPLOAD_Btn"
         android:text="upload"
         app:layout_constraintEnd_toStartOf="@+id/chosenPic"
         app:layout_constraintHorizontal_bias="0.471"
@@ -32,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="delete"
+        android:backgroundTint="@color/DELETE_Btn"
         app:layout_constraintEnd_toEndOf="@+id/uploadBtn"
         app:layout_constraintStart_toStartOf="@+id/uploadBtn"
         app:layout_constraintTop_toBottomOf="@+id/uploadBtn" />
@@ -43,4 +45,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        app:layout_constraintBottom_toTopOf="@+id/uploadBtn"
+        app:layout_constraintEnd_toEndOf="@+id/uploadBtn"
+        app:layout_constraintStart_toStartOf="@+id/uploadBtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

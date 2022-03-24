@@ -22,7 +22,7 @@ class AddChapter : AppCompatActivity() {
         setContentView(R.layout.activity_add_chapter)
         var customListView = findViewById<RecyclerView>(R.id.recycler)
         imgsList= ArrayList<ModelChosenImage>()
-        adapter = ChosenImageAdapter(imgsList)
+        adapter = ChosenImageAdapter(imgsList,"truyen1","chap1")
         customListView?.adapter = adapter
         customListView?.layoutManager = LinearLayoutManager(this)
         val itemDecoration: RecyclerView.ItemDecoration = DividerItemDecoration(this,
@@ -44,7 +44,7 @@ class AddChapter : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode==1111 &&resultCode==Activity.RESULT_OK&& data!=null){
             var filepath=data.data!!
-            imgsList.add(ModelChosenImage(imgsList.size+1,filepath))
+            imgsList.add(ModelChosenImage(imgsList.size+1,filepath,"Waiting to upload"))
             adapter.notifyItemInserted(imgsList.size)
         }
     }

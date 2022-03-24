@@ -20,8 +20,21 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/ADD_Btn"
         android:text="Add Image"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/uploadBtn"
         app:layout_constraintEnd_toEndOf="@+id/recycler"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/recycler"
-        app:layout_constraintTop_toBottomOf="@+id/recycler" />
+        app:layout_constraintTop_toBottomOf="@+id/recycler"
+        app:layout_constraintVertical_bias="0.53" />
+
+    <Button
+        android:id="@+id/uploadBtn"
+        android:backgroundTint="@color/UPLOAD_Btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="Upload chapter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/addImgBtn"
+        app:layout_constraintStart_toStartOf="@+id/addImgBtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

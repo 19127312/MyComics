@@ -9,7 +9,7 @@
         android:id="@+id/numPic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
+        android:layout_marginTop="112dp"
         android:text="TextView"
         app:layout_constraintEnd_toStartOf="@+id/chosenPic"
         app:layout_constraintHorizontal_bias="0.506"
@@ -17,26 +17,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/uploadBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
-    android:backgroundTint="@color/UPLOAD_Btn"
-        android:text="upload"
-        app:layout_constraintEnd_toStartOf="@+id/chosenPic"
-        app:layout_constraintHorizontal_bias="0.471"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numPic" />
-
-    <Button
         android:id="@+id/deleteBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="delete"
+        android:layout_marginTop="24dp"
         android:backgroundTint="@color/DELETE_Btn"
-        app:layout_constraintEnd_toEndOf="@+id/uploadBtn"
-        app:layout_constraintStart_toStartOf="@+id/uploadBtn"
-        app:layout_constraintTop_toBottomOf="@+id/uploadBtn" />
+        android:text="delete"
+        app:layout_constraintEnd_toEndOf="@+id/changeBtn"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/changeBtn"
+        app:layout_constraintTop_toBottomOf="@+id/changeBtn" />
 
     <ImageView
         android:id="@+id/chosenPic"
@@ -48,10 +38,25 @@
 
     <TextView
         android:id="@+id/status"
+        android:layout_width="84dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="8dp"
+        android:text="Status"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/numPic"
+        app:layout_constraintHorizontal_bias="0.576"
+        app:layout_constraintStart_toStartOf="@+id/numPic"
+        app:layout_constraintTop_toBottomOf="@+id/numPic" />
+
+    <Button
+        android:id="@+id/changeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Status"
-        app:layout_constraintBottom_toTopOf="@+id/uploadBtn"
-        app:layout_constraintEnd_toEndOf="@+id/uploadBtn"
-        app:layout_constraintStart_toStartOf="@+id/uploadBtn" />
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/CHANGE_Btn"
+        android:text="Change"
+        app:layout_constraintEnd_toEndOf="@+id/status"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="@+id/status"
+        app:layout_constraintTop_toBottomOf="@+id/status" />
 </androidx.constraintlayout.widget.ConstraintLayout>

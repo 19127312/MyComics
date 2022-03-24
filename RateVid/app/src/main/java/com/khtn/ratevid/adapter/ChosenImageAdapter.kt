@@ -1,7 +1,10 @@
 package com.khtn.ratevid.adapter
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Bitmap
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -16,19 +20,18 @@ import com.google.firebase.storage.FirebaseStorage
 import com.khtn.ratevid.R
 import com.khtn.ratevid.model.ModelChosenImage
 
-class ChosenImageAdapter(var imgs : ArrayList<ModelChosenImage>, var comicID:String, var chapterNumber: String) :
+class ChosenImageAdapter(var context:Activity,var imgs : ArrayList<ModelChosenImage>) :
     RecyclerView.Adapter<ChosenImageAdapter.ViewHolder>() {
-    private  val storageReference= FirebaseStorage.getInstance().reference
-    private val databaseReference = FirebaseDatabase.getInstance().reference
 
+    var posChange=0
     inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
 
         val number = listItemView.findViewById<TextView>(R.id.numPic)
         val status = listItemView.findViewById<TextView>(R.id.status)
         val image=  listItemView.findViewById<ImageView>(R.id.chosenPic)
         val delete = listItemView.findViewById<Button>(R.id.deleteBtn)
-        val upload = listItemView.findViewById<Button>(R.id.uploadBtn)
-
+        //val upload = listItemView.findViewById<Button>(R.id.uploadBtn)
+        val change= listItemView.findViewById<Button>(R.id.changeBtn)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -49,33 +52,39 @@ class ChosenImageAdapter(var imgs : ArrayList<ModelChosenImage>, var comicID:Str
         img.setImageURI(selectImage.img)
         textView.setText("pic "+selectImage.number.toString())
 
-
         holder.delete.setOnClickListener {
             for (i in position..imgs.size-1){
                 imgs[i].number-=1
+                imgs[i].status="Waiting to upload"
             }
             imgs.removeAt(position)
             notifyDataSetChanged()
         }
 
-        holder.upload.setOnClickListener {
-            val path= "${comicID}/${chapterNumber}/pic${selectImage.number}.png"
-            val uploadTask=storageReference.child(path).putFile(selectImage.img)
-            uploadTask.addOnSuccessListener {
-                val downloadURLTask=storageReference.child(path).downloadUrl
-                downloadURLTask.addOnSuccessListener {
-                    var hashMap: HashMap<String, String> = HashMap()
-                    hashMap.put("imgURL", it.toString())
-                    databaseReference.child("comic").child(comicID).child("chapter").child(chapterNumber).child("pic${selectImage.number}").setValue(hashMap)
-                    imgs[position].status="Uploaded"
-                    notifyItemChanged(position)
-                }
 
-            }
+
+        holder.change.setOnClickListener {
+            startFileChooser()
+            posChange=position
+
         }
 
     }
 
+    private fun startFileChooser() {
+
+            var i= Intent()
+            i.setType("image/*")
+            i.setAction(Intent.ACTION_GET_CONTENT)
+            context.startActivityForResult(i,2222)
+    }
+    fun OnActivityResult(data: Intent?){
+        if (data != null) {
+            imgs[posChange].img=data.data!!
+            imgs[posChange].status="Changed ! Waiting to upload"
+            notifyItemChanged(posChange)
+        }
+    }
     override fun getItemCount(): Int {
         return imgs.size
     }

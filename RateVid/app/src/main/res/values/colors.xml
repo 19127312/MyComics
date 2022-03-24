@@ -11,4 +11,5 @@
     <color name="UPLOAD_Btn" > #57AF57</color>
     <color name="DELETE_Btn" > #CE4F4B</color>
     <color name="ADD_Btn">#56B6D3</color>
+    <color name="CHANGE_Btn">#F2BC00</color>
 </resources>

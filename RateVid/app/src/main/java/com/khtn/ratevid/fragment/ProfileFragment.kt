@@ -21,6 +21,7 @@ class ProfileFragment : Fragment() {
     lateinit var auth: FirebaseAuth
     var databaseReference: DatabaseReference?=null
     lateinit var user: FirebaseUser
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,6 +33,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init ()
         loadProfile()
+        updateUsername()
         changePassword()
         logout()
     }
@@ -44,7 +46,7 @@ class ProfileFragment : Fragment() {
         val userReference= databaseReference?.child(user?.uid!!)?.child("UserName")?.addListenerForSingleValueEvent(
             object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    infor.text=snapshot.getValue().toString()
+                    infor.setText(snapshot.getValue().toString())
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -52,6 +54,19 @@ class ProfileFragment : Fragment() {
                 }
 
             })
+
+    }
+    fun updateUsername(){
+        updateButton.setOnClickListener{
+            val userReference= databaseReference?.child(user?.uid!!)?.child("UserName")
+            val newUsername = infor.text.toString()
+            if (newUsername== "admin"){
+                infor.setError("Can not set name to admin")
+                return@setOnClickListener
+            }
+            userReference?.setValue(infor.text.toString())
+            Toast.makeText(activity,"Update username successfully!",Toast.LENGTH_LONG).show()
+        }
 
     }
     fun changePassword(){

@@ -36,6 +36,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="Login"
+        android:backgroundTint="#3197E9"
+        android:height="40dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/passwordET"
         app:layout_constraintStart_toStartOf="@+id/passwordET"
         app:layout_constraintTop_toBottomOf="@+id/registerTV" />

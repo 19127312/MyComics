@@ -17,10 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RateVid">
         <activity
+            android:name=".activity.AddComic"
+            android:exported="false" />
+        <activity
             android:name=".activity.AddChapter"
             android:exported="false" />
-
-
         <activity
             android:name=".activity.ForgetPasswordActivity"
             android:exported="false" />

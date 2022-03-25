@@ -1,17 +1,18 @@
 package com.khtn.ratevid.activity
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
 import com.khtn.ratevid.R
+
 import com.khtn.ratevid.adapter.TabPageAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_profile.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,10 +42,24 @@ class MainActivity : AppCompatActivity() {
 
         tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab) {
+
                 viewPager.currentItem=tab.position
+                when(tab.position){
+                    0->tab.setIcon(R.drawable.ic_home_selected)
+                    1->tab.setIcon(R.drawable.ic_ranking_selected)
+                    2->tab.setIcon(R.drawable.ic_profile_selected)
+                }
+
+                //Log.d("MyScreen",tab.position.toString())
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
+                var oldPos=tab?.position
+                when(oldPos){
+                    0->tab?.setIcon(R.drawable.ic_home)
+                    1->tab?.setIcon(R.drawable.ic_ranking)
+                    2->tab?.setIcon(R.drawable.ic_profile)
+                }
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {

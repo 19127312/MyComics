@@ -56,7 +56,6 @@ class HomeFragment (type: String): Fragment() {
                     for (item in snapshot.children){
                         val modelComic = item.getValue(comicItem::class.java)
                         comicArray.add(modelComic!!)
-                        Log.d("MyScreen", modelComic.name.toString())
                     }
                     adapter.notifyDataSetChanged()
 

@@ -1,4 +1,4 @@
-package com.khtn.ratevid.activity
+package com.khtn.ratevid.adminScreen
 
 import android.app.Activity
 import android.content.Intent

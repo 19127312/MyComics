@@ -1,7 +1,6 @@
-package com.khtn.ratevid.activity
+package com.khtn.ratevid.adminScreen
 
 import android.app.Activity
-import android.content.ClipDescription
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +10,6 @@ import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.khtn.ratevid.R
-import com.khtn.ratevid.model.ModelChosenImage
 import kotlinx.android.synthetic.main.activity_add_comic.*
 
 class AddComic : AppCompatActivity() {

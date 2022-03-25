@@ -9,19 +9,21 @@
         android:id="@+id/thumbnailImg"
         android:layout_width="154dp"
         android:layout_height="243dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:gravity="center"
         android:id="@+id/comicNameTV"
         android:layout_width="152dp"
         android:layout_height="46dp"
+        android:gravity="center"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/thumbnailImg"
         app:layout_constraintStart_toStartOf="@+id/thumbnailImg"
         app:layout_constraintTop_toBottomOf="@+id/thumbnailImg" />
 </androidx.constraintlayout.widget.ConstraintLayout>

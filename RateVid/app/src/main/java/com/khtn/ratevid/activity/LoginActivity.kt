@@ -1,26 +1,20 @@
 package com.khtn.ratevid.activity
 
+import android.app.ProgressDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.khtn.ratevid.R
-import com.khtn.ratevid.adapter.ChosenImageAdapter
-import com.khtn.ratevid.model.ModelChosenImage
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.fragment_profile.*
+
 
 class LoginActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
@@ -53,16 +47,24 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
+    fun showLoadingDialog(){
+        val dialog = ProgressDialog.show(
+            this@LoginActivity, "",
+            "Logging. Please wait...", true
+        )
+    }
     fun checkIfAlreadyLogin(){
         auth = FirebaseAuth.getInstance()
 
         val currentUser=auth.currentUser
         if (currentUser!=null){
+            showLoadingDialog()
+
             var databaseReference: DatabaseReference=FirebaseDatabase.getInstance().reference!!.child("profile")
             val userReference= databaseReference?.child(currentUser?.uid!!)?.child("Type")?.get().addOnSuccessListener {
                 val intent= Intent(this, MainActivity::class.java)
                 intent.putExtra("typeuser",it.value.toString())
+
                 startActivity(intent)
                 finish()
             }.addOnFailureListener{
@@ -76,6 +78,8 @@ class LoginActivity : AppCompatActivity() {
 
         var email=_email.trim { it<= ' ' }
         var pass=_pass.trim{ it<= ' '}
+
+        showLoadingDialog()
         auth.signInWithEmailAndPassword(email,pass)
             .addOnCompleteListener {
                 if(it.isSuccessful){
@@ -85,6 +89,7 @@ class LoginActivity : AppCompatActivity() {
                     val userReference= databaseReference?.child(auth?.uid!!)?.child("Type")?.get().addOnSuccessListener {
                         val intent= Intent(this, MainActivity::class.java)
                         intent.putExtra("typeuser",it.value.toString())
+
                         startActivity(intent)
                         finish()
                     }.addOnFailureListener{

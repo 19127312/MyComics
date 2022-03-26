@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
-
+    lateinit var dialog:ProgressDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -48,10 +48,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
     fun showLoadingDialog(){
-        val dialog = ProgressDialog.show(
+        dialog = ProgressDialog.show(
             this@LoginActivity, "",
             "Logging. Please wait...", true
         )
+
     }
     fun checkIfAlreadyLogin(){
         auth = FirebaseAuth.getInstance()
@@ -99,6 +100,7 @@ class LoginActivity : AppCompatActivity() {
                     //Ket thuc
                 }else{
                     //Neu dang nhap that bai
+                    dialog.dismiss()
                     Toast.makeText(this@LoginActivity,"Login failed, please try again!", Toast.LENGTH_LONG).show()
                 }
             }

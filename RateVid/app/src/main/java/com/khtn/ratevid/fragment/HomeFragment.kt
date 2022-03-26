@@ -14,8 +14,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.khtn.ratevid.R
+import com.khtn.ratevid.activity.DetailComicActivity
 import com.khtn.ratevid.adminScreen.AddComic
 import com.khtn.ratevid.adapter.comicAdapter
+import com.khtn.ratevid.adminScreen.DetailComicAdminActivity
 import com.khtn.ratevid.model.comicItem
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -44,7 +46,24 @@ class HomeFragment (type: String): Fragment() {
         setupLayout()
         AddImage()
         loadDataComic()
+        itemComicClick()
     }
+
+    private fun itemComicClick() {
+        var intent: Intent
+        adapter.setOnItemClickListener(object: comicAdapter.onItemClickListener{
+            override fun onItemClick(position: Int) {
+                if(typeUser=="Admin"){
+                     intent= Intent(context,DetailComicAdminActivity::class.java)
+                     intent.putExtra("item",comicArray[position])
+
+                }
+                else{
+                    intent= Intent(context,DetailComicActivity::class.java)
+                }
+                startActivity(intent)
+            }
+        })    }
 
     private fun loadDataComic() {
 

@@ -1,12 +1,15 @@
 package com.khtn.ratevid.adminScreen
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
 import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.khtn.ratevid.R
@@ -52,7 +55,9 @@ class AddComic : AppCompatActivity() {
     private fun uploadComic(name: String, author: String, description: String) {
         val comicID = "" + System.currentTimeMillis()
 
-
+        val view = findViewById<View>(R.id.root)
+        val snackbar: Snackbar = Snackbar.make(view, "Uploading", Snackbar.LENGTH_INDEFINITE)
+        snackbar.show()
         val path = "${comicID}/thumbnail.png"
         val uploadTask = thumbnail?.let { storageReference.child(path).putFile(it) }
         if (uploadTask != null) {
@@ -61,6 +66,7 @@ class AddComic : AppCompatActivity() {
                 downloadURLTask.addOnSuccessListener {
                     var hashMap: HashMap<String, String> = HashMap()
                     hashMap.put("thumbnail", it.toString())
+                    hashMap.put("id", comicID)
                     hashMap.put("name", name)
                     hashMap.put("author", author)
                     hashMap.put("description", description)
@@ -72,6 +78,7 @@ class AddComic : AppCompatActivity() {
                             finish()
                         }
                         .addOnFailureListener { e ->
+                            snackbar.dismiss()
                             Toast.makeText(this, "${e.message}", Toast.LENGTH_LONG).show()
                         }
                 }

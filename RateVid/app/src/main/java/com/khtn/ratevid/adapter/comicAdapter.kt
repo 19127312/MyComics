@@ -17,17 +17,31 @@ class comicAdapter(var context: Context, var items:ArrayList<comicItem>?) :
     lateinit var ViewGroup: ViewGroup
 
 
-    class HolderView(itemView: View): RecyclerView.ViewHolder(itemView){
+    class HolderView(itemView: View,listener: onItemClickListener): RecyclerView.ViewHolder(itemView){
 
         var img: ImageView =itemView.findViewById(R.id.thumbnailImg)
         var name: TextView =itemView.findViewById(R.id.comicNameTV)
+        init{
+            itemView.setOnClickListener{
+                listener.onItemClick(adapterPosition)
+            }
+        }
 
+    }
+    private lateinit var mListenr: onItemClickListener
 
+    interface  onItemClickListener{
+        fun onItemClick(position: Int){
+
+        }
+    }
+    fun setOnItemClickListener(listener: onItemClickListener){
+        mListenr=listener
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): comicAdapter.HolderView {
         val view= LayoutInflater.from(parent.context).inflate(R.layout.item_comic,parent,false)
         ViewGroup=parent
-        return comicAdapter.HolderView(view)
+        return comicAdapter.HolderView(view,mListenr)
     }
 
 

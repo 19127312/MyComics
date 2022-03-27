@@ -1,8 +1,10 @@
 package com.khtn.ratevid.adapter
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -47,7 +49,11 @@ class ChosenImageAdapter(var context:Activity,var imgs : ArrayList<ModelChosenIm
         var textView = holder.number
         var img = holder.image
         var status=holder.status
-
+        if(selectImage.status=="Uploaded"){
+            status.setTextColor(Color.parseColor("#57AF57"))
+        }else if(selectImage.status=="Waiting to upload" ||selectImage.status=="Changed ! Waiting to upload"){
+            status.setTextColor(Color.parseColor("#CE4F4B"))
+        }
         status.text=selectImage.status
         img.setImageURI(selectImage.img)
         textView.setText("pic "+selectImage.number.toString())

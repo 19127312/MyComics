@@ -64,12 +64,13 @@ class AddComic : AppCompatActivity() {
             uploadTask.addOnSuccessListener {
                 val downloadURLTask = storageReference.child(path).downloadUrl
                 downloadURLTask.addOnSuccessListener {
-                    var hashMap: HashMap<String, String> = HashMap()
+                    var hashMap: HashMap<String, Any> = HashMap()
                     hashMap.put("thumbnail", it.toString())
                     hashMap.put("id", comicID)
                     hashMap.put("name", name)
                     hashMap.put("author", author)
                     hashMap.put("description", description)
+                    hashMap.put("lastestChapter", 1)
 
                     databaseReference.child("comic").child(comicID).setValue(hashMap)
                         .addOnSuccessListener { taskSnapshot ->

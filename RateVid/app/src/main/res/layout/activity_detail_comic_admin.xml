@@ -151,7 +151,7 @@
             app:layout_constraintTop_toBottomOf="@+id/descriptionChangeET" />
 
         <androidx.recyclerview.widget.RecyclerView
-
+            tools:listitem="@layout/item_chapter_admin"
             android:id="@+id/chapterRecycleView"
             android:layout_width="match_parent"
             android:layout_height="448dp"

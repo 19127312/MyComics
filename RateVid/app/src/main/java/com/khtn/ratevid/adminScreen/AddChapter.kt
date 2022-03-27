@@ -6,9 +6,12 @@ import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.khtn.ratevid.R
@@ -17,10 +20,13 @@ import com.khtn.ratevid.model.ModelChosenImage
 import kotlinx.android.synthetic.main.activity_add_chapter.*
 
 class AddChapter : AppCompatActivity() {
+    private val INCREASE_CHAPTER=200
+
     lateinit var imgsList : ArrayList<ModelChosenImage>
     lateinit var adapter: ChosenImageAdapter
-    var comicID="truyen1"
-    var chapterNumber="chap1"
+    var comicID=""
+    var chapterNumber=0
+    var isUpload=false
     private  val storageReference= FirebaseStorage.getInstance().reference
     private val databaseReference = FirebaseDatabase.getInstance().reference
 
@@ -28,6 +34,12 @@ class AddChapter : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_chapter)
         var customListView = findViewById<RecyclerView>(R.id.recycler)
+
+        val intent=intent
+        comicID= intent.getStringExtra("comicID").toString()
+        chapterNumber= intent.getIntExtra("chapterNumber",0)
+
+
         imgsList= ArrayList<ModelChosenImage>()
         adapter = ChosenImageAdapter(this,imgsList)
         customListView?.adapter = adapter
@@ -44,22 +56,32 @@ class AddChapter : AppCompatActivity() {
     }
 
     private fun uploadChapter() {
-        databaseReference.child("comic").child(comicID).child("chapter").child(chapterNumber).removeValue()
+        val view = findViewById<View>(R.id.rootChapter)
+        var snackbar = Snackbar.make(view, "Uploading", Snackbar.LENGTH_INDEFINITE)
+        snackbar.show()
+        databaseReference.child("comic").child(comicID).child("chapter").child(chapterNumber.toString()).removeValue()
         for(i in 0..imgsList.size-1){
             val path= "${comicID}/${chapterNumber}/pic${imgsList[i].number}.png"
             val uploadTask=storageReference.child(path).putFile(imgsList[i].img)
             uploadTask.addOnSuccessListener {
                 val downloadURLTask=storageReference.child(path).downloadUrl
                 downloadURLTask.addOnSuccessListener {
+
                     var hashMap: HashMap<String, String> = HashMap()
                     hashMap.put("imgURL", it.toString())
-                    databaseReference.child("comic").child(comicID).child("chapter").child(chapterNumber).child("pic${imgsList[i].number}").setValue(hashMap)
+                    databaseReference.child("comic").child(comicID).child("chapter").child(chapterNumber.toString()).child("pic${imgsList[i].number}").setValue(hashMap).addOnSuccessListener {
+                        snackbar= Snackbar.make(view, "Upload pic${imgsList[i].number} successfully", Snackbar.LENGTH_SHORT)
+                        snackbar.show()
+                        isUpload=true
+                    }
                     imgsList[i].status="Uploaded"
                     adapter.notifyItemChanged(i)
                 }
 
             }
+
         }
+
     }
 
     fun startFileChooser() {
@@ -80,4 +102,16 @@ class AddChapter : AppCompatActivity() {
             adapter.OnActivityResult(data)
         }
     }
+
+    override fun onBackPressed() {
+        if(isUpload){
+            chapterNumber+=1
+            databaseReference.child("comic").child(comicID).child("lastestChapter").setValue(chapterNumber)
+            val replyIntent = Intent()
+            setResult(Activity.RESULT_OK, replyIntent)
+
+        }
+        finish()
+    }
+
 }

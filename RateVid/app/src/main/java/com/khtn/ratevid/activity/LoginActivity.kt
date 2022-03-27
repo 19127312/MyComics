@@ -68,6 +68,7 @@ class LoginActivity : AppCompatActivity() {
 
                 startActivity(intent)
                 finish()
+                dialog.dismiss()
             }.addOnFailureListener{
                 Log.e("MyScreen", "Error getting data", it)
             }
@@ -93,6 +94,8 @@ class LoginActivity : AppCompatActivity() {
 
                         startActivity(intent)
                         finish()
+                        dialog.dismiss()
+
                     }.addOnFailureListener{
                         Log.e("MyScreen", "Error getting data", it)
                     }

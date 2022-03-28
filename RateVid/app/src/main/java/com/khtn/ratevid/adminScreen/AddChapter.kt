@@ -27,6 +27,7 @@ class AddChapter : AppCompatActivity() {
     var comicID=""
     var chapterNumber=0
     var isUpload=false
+    var isUpdate=false
     private  val storageReference= FirebaseStorage.getInstance().reference
     private val databaseReference = FirebaseDatabase.getInstance().reference
 
@@ -38,7 +39,13 @@ class AddChapter : AppCompatActivity() {
         val intent=intent
         comicID= intent.getStringExtra("comicID").toString()
         chapterNumber= intent.getIntExtra("chapterNumber",0)
-
+        isUpdate=intent.getBooleanExtra("isUpdate",false)
+        Log.d("MyScreen",comicID)
+        Log.d("MyScreen",chapterNumber.toString())
+        Log.d("MyScreen",isUpdate.toString())
+        if(isUpdate){
+            getChapterData()
+        }
 
         imgsList= ArrayList<ModelChosenImage>()
         adapter = ChosenImageAdapter(this,imgsList)
@@ -55,6 +62,10 @@ class AddChapter : AppCompatActivity() {
         }
     }
 
+    private fun getChapterData() {
+
+    }
+
     private fun uploadChapter() {
         val view = findViewById<View>(R.id.rootChapter)
         var snackbar = Snackbar.make(view, "Uploading", Snackbar.LENGTH_INDEFINITE)
@@ -62,22 +73,24 @@ class AddChapter : AppCompatActivity() {
         databaseReference.child("comic").child(comicID).child("chapter").child(chapterNumber.toString()).removeValue()
         for(i in 0..imgsList.size-1){
             val path= "${comicID}/${chapterNumber}/pic${imgsList[i].number}.png"
-            val uploadTask=storageReference.child(path).putFile(imgsList[i].img)
-            uploadTask.addOnSuccessListener {
-                val downloadURLTask=storageReference.child(path).downloadUrl
-                downloadURLTask.addOnSuccessListener {
+            val uploadTask= imgsList[i].imgURI?.let { storageReference.child(path).putFile(it) }
+            if (uploadTask != null) {
+                uploadTask.addOnSuccessListener {
+                    val downloadURLTask=storageReference.child(path).downloadUrl
+                    downloadURLTask.addOnSuccessListener {
 
-                    var hashMap: HashMap<String, String> = HashMap()
-                    hashMap.put("imgURL", it.toString())
-                    databaseReference.child("comic").child(comicID).child("chapter").child(chapterNumber.toString()).child("pic${imgsList[i].number}").setValue(hashMap).addOnSuccessListener {
-                        snackbar= Snackbar.make(view, "Upload pic${imgsList[i].number} successfully", Snackbar.LENGTH_SHORT)
-                        snackbar.show()
-                        isUpload=true
+                        var hashMap: HashMap<String, String> = HashMap()
+                        hashMap.put("imgURL", it.toString())
+                        databaseReference.child("comic").child(comicID).child("chapter").child(chapterNumber.toString()).child("pic${imgsList[i].number}").setValue(hashMap).addOnSuccessListener {
+                            snackbar= Snackbar.make(view, "Upload pic${imgsList[i].number} successfully", Snackbar.LENGTH_SHORT)
+                            snackbar.show()
+                            isUpload=true
+                        }
+                        imgsList[i].status="Uploaded"
+                        adapter.notifyItemChanged(i)
                     }
-                    imgsList[i].status="Uploaded"
-                    adapter.notifyItemChanged(i)
-                }
 
+                }
             }
 
         }

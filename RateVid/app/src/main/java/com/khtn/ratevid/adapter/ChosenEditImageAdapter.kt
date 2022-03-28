@@ -1,29 +1,21 @@
 package com.khtn.ratevid.adapter
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
-import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
+import com.bumptech.glide.Glide
 import com.khtn.ratevid.R
-import com.khtn.ratevid.model.ModelChosenImage
+import com.khtn.ratevid.model.ModelEditImage
 
-class ChosenImageAdapter(var context:Activity,var imgs : ArrayList<ModelChosenImage>) :
-    RecyclerView.Adapter<ChosenImageAdapter.ViewHolder>() {
+class ChosenEditImageAdapter(var context: Activity, var imgs : ArrayList<ModelEditImage>) :
+    RecyclerView.Adapter<ChosenEditImageAdapter.ViewHolder>() {
 
     var posChange=0
     inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
@@ -54,8 +46,13 @@ class ChosenImageAdapter(var context:Activity,var imgs : ArrayList<ModelChosenIm
         }else if(selectImage.status=="Waiting to upload" ||selectImage.status=="Changed ! Waiting to upload"){
             status.setTextColor(Color.parseColor("#CE4F4B"))
         }
+
         status.text=selectImage.status
-        img.setImageURI(selectImage.imgURI)
+        if(selectImage.imgURI==null){
+            Glide.with(context).load(selectImage.imgURL).into(holder.image)
+        }else{
+            img.setImageURI(selectImage.imgURI)
+        }
         textView.setText("pic "+selectImage.number.toString())
 
         holder.delete.setOnClickListener {
@@ -79,10 +76,10 @@ class ChosenImageAdapter(var context:Activity,var imgs : ArrayList<ModelChosenIm
 
     private fun startFileChooser() {
 
-            var i= Intent()
-            i.setType("image/*")
-            i.setAction(Intent.ACTION_GET_CONTENT)
-            context.startActivityForResult(i,2222)
+        var i= Intent()
+        i.setType("image/*")
+        i.setAction(Intent.ACTION_GET_CONTENT)
+        context.startActivityForResult(i,2222)
     }
     fun OnActivityResult(data: Intent?){
         if (data != null) {

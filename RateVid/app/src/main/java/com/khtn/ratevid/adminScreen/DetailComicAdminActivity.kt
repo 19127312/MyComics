@@ -6,11 +6,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
-import android.view.View
 import android.widget.EditText
 import android.widget.Toast
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -175,10 +172,9 @@ class DetailComicAdminActivity : AppCompatActivity() {
         customListView!!.adapter = adapter
         adapter.setOnItemClickListener(object: ChapterAdapter.onItemClickListener{
             override fun onItemClick(position: Int) {
-                val intent= Intent(this@DetailComicAdminActivity,AddChapter::class.java)
+                val intent= Intent(this@DetailComicAdminActivity,EditChapter::class.java)
                 intent.putExtra("comicID",comic.id)
-                intent.putExtra("chapterNumber",position)
-                intent.putExtra("isUpdate",1)
+                intent.putExtra("chapterNumber",position+1)
 
                 startActivity(intent)
 
@@ -188,15 +184,18 @@ class DetailComicAdminActivity : AppCompatActivity() {
 
     }
     private fun loadChapter() {
-        FirebaseDatabase.getInstance().getReference("comic").child(comic.id.toString()).child("lastestChapter").addListenerForSingleValueEvent(
+        FirebaseDatabase.getInstance().getReference("comic").child(comic.id.toString()).child("lastestChapter").addValueEventListener(
             object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
+                    chapters.clear()
+                    adapter.notifyDataSetChanged()
                     var number=snapshot.getValue(Int::class.java)
-
-                    for (i in 1..number!!){
+                    for (i in 1..number!!-1){
                         chapters.add(i)
-                        adapter.notifyItemInserted(i)
+
                     }
+                    adapter.notifyDataSetChanged()
+
                 }
 
                 override fun onCancelled(error: DatabaseError) {

@@ -29,6 +29,7 @@ class AddChapter : AppCompatActivity() {
     var chapterNumber=0
     var isUpload=false
     var isUpdate=false
+    lateinit var view :View
     private  val storageReference= FirebaseStorage.getInstance().reference
     private val databaseReference = FirebaseDatabase.getInstance().reference
 
@@ -36,14 +37,11 @@ class AddChapter : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_chapter)
         var customListView = findViewById<RecyclerView>(R.id.recycler)
-
+        view=findViewById<View>(R.id.rootChapter)
         val intent=intent
         comicID= intent.getStringExtra("comicID").toString()
         chapterNumber= intent.getIntExtra("chapterNumber",0)
         isUpdate=intent.getBooleanExtra("isUpdate",false)
-        Log.d("MyScreen",comicID)
-        Log.d("MyScreen",chapterNumber.toString())
-        Log.d("MyScreen",isUpdate.toString())
 
         //If update , get data from firebase
         if(isUpdate){
@@ -52,7 +50,7 @@ class AddChapter : AppCompatActivity() {
 
         //setup RecycleView
         imgsList= ArrayList<ModelChosenImage>()
-        adapter = ChosenImageAdapter(this,imgsList)
+        adapter = ChosenImageAdapter(view,this,imgsList)
         customListView?.adapter = adapter
         customListView?.layoutManager = LinearLayoutManager(this)
         val itemDecoration: RecyclerView.ItemDecoration = DividerItemDecoration(this,
@@ -93,7 +91,6 @@ class AddChapter : AppCompatActivity() {
     }
 
     private fun uploadChapter() {
-        val view = findViewById<View>(R.id.rootChapter)
         var snackbar = Snackbar.make(view, "Uploading", Snackbar.LENGTH_INDEFINITE)
         snackbar.show()
         //Delete all current pic in this chapter for easier to modify pic

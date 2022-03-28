@@ -161,6 +161,20 @@
             app:layout_constraintTop_toBottomOf="@+id/addChapterBtn" />
 
         <Button
+            android:id="@+id/deleteComicBtn"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="@color/DELETE_Btn"
+            android:text="DELETE COMIC"
+            app:layout_constraintEnd_toEndOf="@+id/chapterRecycleView"
+            app:layout_constraintHorizontal_bias="0.025"
+            app:layout_constraintStart_toStartOf="@+id/chapterRecycleView"
+            app:layout_constraintTop_toBottomOf="@+id/chapterRecycleView" />
+
+        <Button
             android:id="@+id/watchCommentBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

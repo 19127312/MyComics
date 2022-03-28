@@ -16,8 +16,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:layout_marginHorizontal="20dp"
         android:id="@+id/addImgBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/ADD_Btn"
         android:text="Add Image"
@@ -29,13 +30,16 @@
         app:layout_constraintVertical_bias="0.53" />
 
     <Button
+        android:layout_marginHorizontal="20dp"
+
         android:id="@+id/uploadBtn"
-        android:backgroundTint="@color/UPLOAD_Btn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="60dp"
+        android:backgroundTint="@color/UPLOAD_Btn"
         android:text="Upload chapter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/addImgBtn"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/addImgBtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

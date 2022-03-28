@@ -1,26 +1,32 @@
 package com.khtn.ratevid.adminScreen
 
 import android.app.Activity
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.khtn.ratevid.R
 import com.khtn.ratevid.adapter.ChapterAdapter
 import com.khtn.ratevid.model.comicItem
-import kotlinx.android.synthetic.main.activity_add_comic.*
 import kotlinx.android.synthetic.main.activity_detail_comic_admin.*
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.fragment_profile.*
 
 class DetailComicAdminActivity : AppCompatActivity() {
 
@@ -30,7 +36,7 @@ class DetailComicAdminActivity : AppCompatActivity() {
 
     private val IMAGE_PICK_GALLARY_CODE=100
     private val INCREASE_CHAPTER=200
-    lateinit var comic:comicItem
+    public lateinit var comic:comicItem
     lateinit var adapter:ChapterAdapter
     lateinit var customListView: RecyclerView
     var chapters=ArrayList<Int>()
@@ -44,6 +50,32 @@ class DetailComicAdminActivity : AppCompatActivity() {
         setupLayout(comic)
         changeComicProperties(comic)
         addChapter(comic)
+        deleteChapter(comic)
+    }
+
+    private fun deleteChapter(comic: comicItem) {
+        deleteComicBtn.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+
+            builder.setTitle("Confirm")
+            builder.setMessage("Are you sure to delete this manga?")
+
+            builder.setPositiveButton("YES") { dialog, which -> // remove the the manga and close the dialog
+                finish()
+
+                dialog.dismiss()
+                databaseReference.child("comic").child(comic?.id!!).removeValue()
+
+            }
+
+            builder.setNegativeButton("NO") { dialog, which -> // Do nothing
+
+                dialog.dismiss()
+            }
+
+            val alert = builder.create()
+            alert.show()
+        }
     }
 
     private fun addChapter(comic: comicItem) {
@@ -188,15 +220,19 @@ class DetailComicAdminActivity : AppCompatActivity() {
         FirebaseDatabase.getInstance().getReference("comic").child(comic.id.toString()).child("lastestChapter").addValueEventListener(
             object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    chapters.clear()
-                    adapter.notifyDataSetChanged()
-                    var number=snapshot.getValue(Int::class.java)
-                    for (i in 1..number!!-1){
-                        chapters.add(i)
+                    if(snapshot.exists()){
 
+
+
+                        chapters.clear()
+                        adapter.notifyDataSetChanged()
+                        var number = snapshot.getValue(Int::class.java)
+                        for (i in 1..number!! - 1) {
+                            chapters.add(i)
+
+                        }
+                        adapter.notifyDataSetChanged()
                     }
-                    adapter.notifyDataSetChanged()
-
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -207,4 +243,8 @@ class DetailComicAdminActivity : AppCompatActivity() {
 
 
     }
+
+
 }
+
+

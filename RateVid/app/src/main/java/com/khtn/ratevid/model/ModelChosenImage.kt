@@ -17,6 +17,7 @@ class ModelChosenImage : Serializable {
         this.status=status
 
     }
+
     constructor(number: Int?, imgURL: String?, status:String?){
         this.number=number
         this.imgURL=imgURL
@@ -25,5 +26,11 @@ class ModelChosenImage : Serializable {
     fun addNumStatus(number: Int?, status: String?){
         this.number=number
         this.status=status
+    }
+    constructor (temp: ModelChosenImage){
+        this.number=temp.number
+        this.imgURI=temp.imgURI
+        this.imgURL=temp.imgURL
+        this.status=temp.status
     }
 }

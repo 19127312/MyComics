@@ -16,6 +16,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -55,7 +56,12 @@ class ChosenImageAdapter(var context:Activity,var imgs : ArrayList<ModelChosenIm
             status.setTextColor(Color.parseColor("#CE4F4B"))
         }
         status.text=selectImage.status
-        img.setImageURI(selectImage.imgURI)
+
+        if(selectImage.imgURI==null){
+            Glide.with(context).load(selectImage.imgURL).into(holder.image)
+        }else{
+            img.setImageURI(selectImage.imgURI)
+        }
         textView.setText("pic "+selectImage.number.toString())
 
         holder.delete.setOnClickListener {

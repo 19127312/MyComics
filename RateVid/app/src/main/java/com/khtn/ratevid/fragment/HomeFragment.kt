@@ -56,10 +56,11 @@ class HomeFragment (type: String): Fragment() {
                 if(typeUser=="Admin"){
                      intent= Intent(context,DetailComicAdminActivity::class.java)
                      intent.putExtra("item",comicArray[position])
-
                 }
                 else{
                     intent= Intent(context,DetailComicActivity::class.java)
+                    intent.putExtra("item",comicArray[position])
+
                 }
                 startActivity(intent)
             }

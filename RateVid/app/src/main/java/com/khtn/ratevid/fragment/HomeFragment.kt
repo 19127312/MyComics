@@ -2,7 +2,6 @@ package com.khtn.ratevid.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,19 +15,20 @@ import com.google.firebase.database.*
 import com.khtn.ratevid.R
 import com.khtn.ratevid.activity.DetailComicActivity
 import com.khtn.ratevid.adminScreen.AddComic
-import com.khtn.ratevid.adapter.comicAdapter
+import com.khtn.ratevid.adapter.ComicAdapter
 import com.khtn.ratevid.adminScreen.DetailComicAdminActivity
 import com.khtn.ratevid.model.comicItem
+import com.khtn.ratevid.model.userItem
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
-class HomeFragment (type: String): Fragment() {
+class HomeFragment (user: userItem): Fragment() {
     lateinit var auth: FirebaseAuth
     var databaseReference: DatabaseReference?=null
     lateinit var user: FirebaseUser
-    var typeUser=type
+    var curUser=user
     var comicArray= ArrayList<comicItem>()
-    private lateinit var adapter: comicAdapter
+    private lateinit var adapter: ComicAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,15 +51,16 @@ class HomeFragment (type: String): Fragment() {
 
     private fun itemComicClick() {
         var intent: Intent
-        adapter.setOnItemClickListener(object: comicAdapter.onItemClickListener{
+        adapter.setOnItemClickListener(object: ComicAdapter.onItemClickListener{
             override fun onItemClick(position: Int) {
-                if(typeUser=="Admin"){
+                if(curUser.Type=="Admin"){
                      intent= Intent(context,DetailComicAdminActivity::class.java)
                      intent.putExtra("item",comicArray[position])
                 }
                 else{
                     intent= Intent(context,DetailComicActivity::class.java)
                     intent.putExtra("item",comicArray[position])
+                    intent.putExtra("user",curUser)
 
                 }
                 startActivity(intent)
@@ -89,7 +90,7 @@ class HomeFragment (type: String): Fragment() {
     }
 
     private fun setupLayout() {
-        if(typeUser!="Admin"){
+        if(curUser.Type!="Admin"){
             AddButton.visibility=View.INVISIBLE
         }
     }
@@ -104,7 +105,7 @@ class HomeFragment (type: String): Fragment() {
         if (recyclerView != null) {
             recyclerView.addItemDecoration(itemDecoration)
         }
-        adapter= context?.let { comicAdapter(it,comicArray) }!!
+        adapter= context?.let { ComicAdapter(it,comicArray) }!!
         if (recyclerView != null) {
             recyclerView.adapter=adapter
         }

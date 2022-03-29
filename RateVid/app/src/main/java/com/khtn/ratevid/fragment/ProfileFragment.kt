@@ -13,15 +13,16 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.khtn.ratevid.R
 import com.khtn.ratevid.activity.LoginActivity
+import com.khtn.ratevid.model.userItem
 import kotlinx.android.synthetic.main.change_password_dialog.view.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 
-class ProfileFragment : Fragment() {
+class ProfileFragment(user: userItem) : Fragment() {
     lateinit var auth: FirebaseAuth
     var databaseReference: DatabaseReference?=null
     lateinit var user: FirebaseUser
-
+    var curUser:userItem=user
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,17 +44,7 @@ class ProfileFragment : Fragment() {
         user= auth.currentUser!!
     }
     fun loadProfile(){
-        val userReference= databaseReference?.child(user?.uid!!)?.child("UserName")?.addListenerForSingleValueEvent(
-            object: ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    infor.setText(snapshot.getValue().toString())
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-            })
+        infor.setText(curUser.UserName)
 
     }
     fun updateUsername(){

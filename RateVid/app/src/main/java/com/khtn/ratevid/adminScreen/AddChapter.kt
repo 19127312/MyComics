@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,15 +15,15 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.khtn.ratevid.R
-import com.khtn.ratevid.adapter.ChosenImageAdapter
-import com.khtn.ratevid.model.ModelChosenImage
+import com.khtn.ratevid.adapter.PicAdapter
+import com.khtn.ratevid.model.picItem
 import kotlinx.android.synthetic.main.activity_add_chapter.*
 
 class AddChapter : AppCompatActivity() {
     private val INCREASE_CHAPTER=200
 
-    lateinit var imgsList : ArrayList<ModelChosenImage>
-    lateinit var adapter: ChosenImageAdapter
+    lateinit var imgsList : ArrayList<picItem>
+    lateinit var adapter: PicAdapter
     var comicID=""
     var chapterNumber=0
     var isUpload=false
@@ -49,8 +48,8 @@ class AddChapter : AppCompatActivity() {
         }
 
         //setup RecycleView
-        imgsList= ArrayList<ModelChosenImage>()
-        adapter = ChosenImageAdapter(view,this,imgsList)
+        imgsList= ArrayList<picItem>()
+        adapter = PicAdapter(view,this,imgsList)
         customListView?.adapter = adapter
         customListView?.layoutManager = LinearLayoutManager(this)
         val itemDecoration: RecyclerView.ItemDecoration = DividerItemDecoration(this,
@@ -74,7 +73,7 @@ class AddChapter : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var i=1
                 for (item in snapshot.children){
-                    val modelComic = item.getValue(ModelChosenImage::class.java)
+                    val modelComic = item.getValue(picItem::class.java)
                     modelComic?.addNumStatus(i,"Waiting to upload")
                     i++
                     if (modelComic != null) {
@@ -150,7 +149,7 @@ class AddChapter : AppCompatActivity() {
         //Add function, if pic is successfully gotten from gallery
         if(requestCode==1111 &&resultCode==Activity.RESULT_OK&& data!=null){
             var filepath=data.data!!
-            imgsList.add(ModelChosenImage(imgsList.size+1,filepath,"Waiting to upload"))
+            imgsList.add(picItem(imgsList.size+1,filepath,"Waiting to upload"))
             adapter.notifyItemInserted(imgsList.size)
         }
 

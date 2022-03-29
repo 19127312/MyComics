@@ -11,8 +11,8 @@ import com.bumptech.glide.Glide
 import com.khtn.ratevid.R
 import com.khtn.ratevid.model.comicItem
 
-class comicAdapter(var context: Context, var items:ArrayList<comicItem>?) :
-    RecyclerView.Adapter<comicAdapter.HolderView>(){
+class ComicAdapter(var context: Context, var items:ArrayList<comicItem>?) :
+    RecyclerView.Adapter<ComicAdapter.HolderView>(){
 
     lateinit var ViewGroup: ViewGroup
 
@@ -38,10 +38,10 @@ class comicAdapter(var context: Context, var items:ArrayList<comicItem>?) :
     fun setOnItemClickListener(listener: onItemClickListener){
         mListenr=listener
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): comicAdapter.HolderView {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComicAdapter.HolderView {
         val view= LayoutInflater.from(parent.context).inflate(R.layout.item_comic,parent,false)
         ViewGroup=parent
-        return comicAdapter.HolderView(view,mListenr)
+        return ComicAdapter.HolderView(view,mListenr)
     }
 
 

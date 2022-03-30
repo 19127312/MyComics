@@ -231,6 +231,7 @@ class DetailComicAdminActivity : AppCompatActivity() {
                             chapters.add(i)
 
                         }
+                        chapters.reverse()
                         adapter.notifyDataSetChanged()
                     }
                 }

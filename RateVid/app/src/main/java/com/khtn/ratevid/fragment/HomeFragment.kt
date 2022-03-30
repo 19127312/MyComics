@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,11 +24,10 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment (user: userItem): Fragment() {
-    lateinit var auth: FirebaseAuth
-    var databaseReference: DatabaseReference?=null
-    lateinit var user: FirebaseUser
     var curUser=user
     var comicArray= ArrayList<comicItem>()
+    var tempComics=ArrayList<comicItem>()
+
     private lateinit var adapter: ComicAdapter
 
     override fun onCreateView(
@@ -47,6 +47,42 @@ class HomeFragment (user: userItem): Fragment() {
         AddImage()
         loadDataComic()
         itemComicClick()
+        searchChange()
+    }
+
+    private fun searchChange() {
+        search.setOnQueryTextListener(object: SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                comicArray.clear()
+                var text=p0.toString()
+                if (text.isEmpty()) {
+                    comicArray.addAll(tempComics)
+                    adapter.notifyDataSetChanged()
+                    searchResult.text="NEW MANGA"
+
+                } else {
+                    text = text.toLowerCase()
+                    for (student in tempComics) {
+                        if (student.name?.toLowerCase()?.contains(text) == true) {
+                            comicArray.add(student)
+                        }
+                    }
+                    if(comicArray.isEmpty()){
+                        searchResult.text="NO RESULT"
+                    }
+                    adapter.notifyDataSetChanged()
+
+                }
+
+                return false
+            }
+
+        })
     }
 
     private fun itemComicClick() {
@@ -78,8 +114,11 @@ class HomeFragment (user: userItem): Fragment() {
                         val modelComic = item.getValue(comicItem::class.java)
                         comicArray.add(modelComic!!)
                     }
+                    comicArray.reverse()
                     adapter.notifyDataSetChanged()
-
+                    for( comic in comicArray){
+                        tempComics.add(comic)
+                    }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -90,6 +129,7 @@ class HomeFragment (user: userItem): Fragment() {
     }
 
     private fun setupLayout() {
+
         if(curUser.Type!="Admin"){
             AddButton.visibility=View.INVISIBLE
         }
@@ -113,6 +153,7 @@ class HomeFragment (user: userItem): Fragment() {
 
 
     }
+
     fun AddImage(){
         AddButton.setOnClickListener {
             val intent= Intent(context, AddComic::class.java)

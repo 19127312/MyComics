@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
@@ -23,6 +24,7 @@ class ProfileFragment(user: userItem) : Fragment() {
     var databaseReference: DatabaseReference?=null
     lateinit var user: FirebaseUser
     var curUser:userItem=user
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,6 +40,9 @@ class ProfileFragment(user: userItem) : Fragment() {
         changePassword()
         logout()
     }
+
+
+
     fun init (){
         auth = FirebaseAuth.getInstance()
         databaseReference= FirebaseDatabase.getInstance().reference!!.child("profile")

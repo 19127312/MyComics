@@ -1,32 +1,22 @@
 package com.khtn.ratevid.adapter
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
-import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
 import com.khtn.ratevid.R
-import com.khtn.ratevid.model.ModelChosenImage
+import com.khtn.ratevid.model.picItem
 
-class ChosenImageAdapter(var view: View, var context:Activity,var imgs : ArrayList<ModelChosenImage>) :
-    RecyclerView.Adapter<ChosenImageAdapter.ViewHolder>() {
+class PicAdapter(var view: View, var context:Activity, var imgs : ArrayList<picItem>) :
+    RecyclerView.Adapter<PicAdapter.ViewHolder>() {
 
     var posChange=0
     inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
@@ -71,7 +61,7 @@ class ChosenImageAdapter(var view: View, var context:Activity,var imgs : ArrayLi
                 imgs[i].number = imgs[i].number?.minus(1)
                 imgs[i].status="Waiting to upload"
             }
-            var item=ModelChosenImage(imgs[position])
+            var item=picItem(imgs[position])
             imgs.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position,imgs.size)

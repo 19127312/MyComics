@@ -1,9 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="1000dp">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.DetailComicActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chapterRV"
+        android:layout_width="match_parent"
+        android:layout_height="473dp"
+
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:fontFamily="@font/baron_neue_black"
+        android:id="@+id/nameComicTV"
+        android:layout_width="274dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:text="name"
+        android:textColor="@color/icon"
+        android:textSize="35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/authorTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="author"
+        android:textSize="15dp"
+        android:fontFamily="@font/baron_neue_bold"
+        android:textColor="@color/tabBackGroundColor"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/nameComicTV"
+        app:layout_constraintTop_toBottomOf="@+id/nameComicTV" />
+
+    <EditText
+        android:fontFamily="@font/poppins_regular"
+        android:background="@drawable/bd_et"
+        android:id="@+id/descriptionTV"
+        android:layout_width="match_parent"
+        android:layout_height="144dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="25dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/authorTV"
+        app:layout_constraintTop_toBottomOf="@+id/authorTV"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/FollowBtn"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="8dp"
+        android:text="Follow"
+        android:textColor="@color/white"
+        android:background="@drawable/bd_button_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTV" />
+
+    <Button
+        android:id="@+id/commentBtn"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="30dp"
+        android:text="Comment"
+        android:textColor="@color/white"
+
+        android:background="@drawable/bd_button_yellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.56"
+        app:layout_constraintStart_toEndOf="@+id/FollowBtn"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTV" />
+
+    <ImageView
+        android:id="@+id/likeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/nameComicTV"
+        app:layout_constraintEnd_toStartOf="@+id/likenumberTV"
+        app:layout_constraintTop_toTopOf="@+id/nameComicTV"
+        app:layout_constraintVertical_bias="0.565"
+        app:srcCompat="@drawable/ic_favorite_unfill" />
+
+    <TextView
+        android:id="@+id/likenumberTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="25dp"
+        android:text="TextView"
+        android:textColor="@color/TEXT_VIEW"
+        app:layout_constraintBottom_toBottomOf="@+id/likeBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/likeBtn"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:fontFamily="@font/baron_neue_bold"
+        android:textSize="20dp"
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Chapter List"
+        app:layout_constraintStart_toStartOf="@+id/descriptionTV"
+        app:layout_constraintTop_toBottomOf="@+id/FollowBtn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

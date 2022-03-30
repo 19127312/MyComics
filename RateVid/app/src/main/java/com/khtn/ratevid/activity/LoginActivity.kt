@@ -10,9 +10,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.khtn.ratevid.R
+import com.khtn.ratevid.model.userItem
 import kotlinx.android.synthetic.main.activity_login.*
 
 
@@ -62,17 +62,24 @@ class LoginActivity : AppCompatActivity() {
             showLoadingDialog()
 
             var databaseReference: DatabaseReference=FirebaseDatabase.getInstance().reference!!.child("profile")
-            val userReference= databaseReference?.child(currentUser?.uid!!)?.child("Type")?.get().addOnSuccessListener {
-                val intent= Intent(this, MainActivity::class.java)
-                intent.putExtra("typeuser",it.value.toString())
+            databaseReference?.child(currentUser?.uid!!)?.addListenerForSingleValueEvent(object :ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var user = userItem(
+                        snapshot.child("UID").value as String?,
+                        snapshot.child("Type").value as String?,
+                        snapshot.child("UserName").value as String?
+                    )
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    intent.putExtra("user", user)
+                    startActivity(intent)
+                    finish()
+                    dialog.dismiss()
+                }
 
-                startActivity(intent)
-                finish()
-                dialog.dismiss()
-            }.addOnFailureListener{
-                Log.e("MyScreen", "Error getting data", it)
-            }
-
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
 
         }
     }
@@ -85,20 +92,26 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email,pass)
             .addOnCompleteListener {
                 if(it.isSuccessful){
-                    //Neu thanh cong --> Chuyen sang man hinh profie
 
                     var databaseReference: DatabaseReference=FirebaseDatabase.getInstance().reference!!.child("profile")
-                    val userReference= databaseReference?.child(auth?.uid!!)?.child("Type")?.get().addOnSuccessListener {
-                        val intent= Intent(this, MainActivity::class.java)
-                        intent.putExtra("typeuser",it.value.toString())
+                    databaseReference?.child( auth?.uid!!)?.addListenerForSingleValueEvent(object :ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            var user = userItem(
+                                snapshot.child("UID").value as String?,
+                                snapshot.child("Type").value as String?,
+                                snapshot.child("UserName").value as String?
+                            )
+                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            intent.putExtra("user", user)
+                            startActivity(intent)
+                            finish()
+                            dialog.dismiss()
+                        }
 
-                        startActivity(intent)
-                        finish()
-                        dialog.dismiss()
-
-                    }.addOnFailureListener{
-                        Log.e("MyScreen", "Error getting data", it)
-                    }
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+                    })
 
                     //Ket thuc
                 }else{

@@ -10,12 +10,12 @@ import com.google.firebase.database.DatabaseReference
 import com.khtn.ratevid.fragment.HomeFragment
 import com.khtn.ratevid.fragment.ProfileFragment
 import com.khtn.ratevid.fragment.RankingFragment
+import com.khtn.ratevid.model.userItem
 
-class TabPageAdapter(activity: FragmentActivity, private val tabCount:Int,type: String) : FragmentStateAdapter(activity){
+class TabPageAdapter(activity: FragmentActivity, private val tabCount:Int,user: userItem) : FragmentStateAdapter(activity){
     lateinit var auth: FirebaseAuth
     var databaseReference: DatabaseReference?=null
-    lateinit var user: FirebaseUser
-    var typeUser=type
+    var user= user
     override fun getItemCount(): Int {
         return tabCount
     }
@@ -24,10 +24,10 @@ class TabPageAdapter(activity: FragmentActivity, private val tabCount:Int,type: 
 
 
         return when(position){
-            0-> HomeFragment( typeUser)
+            0-> HomeFragment( user)
             1-> RankingFragment()
-            2-> ProfileFragment()
-            else->HomeFragment( typeUser)
+            2-> ProfileFragment(user)
+            else->HomeFragment( user)
         }
     }
 

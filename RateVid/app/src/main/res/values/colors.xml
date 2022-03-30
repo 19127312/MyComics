@@ -7,13 +7,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
     <color name="tabBackGroundColor">#1A3B34</color>
     <color name="UPLOAD_Btn" > #57AF57</color>
     <color name="DELETE_Btn" > #CE4F4B</color>
+    <color name="blue_button">#0062FF</color>
+    <color name="yellow_button">#FFC542</color>
+    <color name="favorite">#FC4646</color>
     <color name="ADD_Btn">#56B6D3</color>
     <color name="CHANGE_Btn">#F2BC00</color>
     <color name="BD_ET">#D4F5E9</color>
     <color name="TEXT_VIEW">#435F59</color>
-    <color name="icon">#3DD598</color>
+    <color name="icon">#5EDDAB</color>
     <color name="light_green">#D4F5E9</color>
 </resources>

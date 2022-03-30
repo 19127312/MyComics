@@ -63,10 +63,21 @@ class ProfileFragment(user: userItem) : Fragment() {
     fun changePassword(){
         changePassBT.setOnClickListener{
             val dialog=LayoutInflater.from(context).inflate(R.layout.change_password_dialog,null)
-            val builder= context?.let { it1 -> AlertDialog.Builder(it1).setView(dialog).setTitle("Change Password") }
+            val builder= context?.let { it1 -> AlertDialog.Builder(it1).setView(dialog) }
             val myDialog= builder?.show()
             dialog.changePassBT.setOnClickListener {
+
                 val pass=dialog.changePassET.text
+                val repeatPass = dialog.changeRepeatPassET.text
+                if(pass.length == 0){
+                    dialog.changePassET.setError("Please enter new password")
+                    return@setOnClickListener
+                }
+                else if(pass!=repeatPass){
+                    dialog.changeRepeatPassET.setError("Password and Repeat Password are not the same")
+                    return@setOnClickListener
+                }
+
                 if (myDialog != null) {
                     myDialog.dismiss()
                 }

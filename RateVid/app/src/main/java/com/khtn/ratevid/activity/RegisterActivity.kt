@@ -18,14 +18,21 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         registerBT.setOnClickListener {
-            if (TextUtils.isEmpty(passwordET.text.toString())){
-                passwordET.setError("Please enter password")
+
+            if(TextUtils.isEmpty(userNameET.text.toString())){
+                userNameET.setError("Please enter username")
                 return@setOnClickListener
             }else if(TextUtils.isEmpty(emailRegisterET.text.toString())){
                 emailRegisterET.setError("Please enter email")
                 return@setOnClickListener
-            }else if(TextUtils.isEmpty(userNameET.text.toString())){
-                emailRegisterET.setError("Please user name")
+            }else if (TextUtils.isEmpty(passwordET.text.toString())){
+                passwordET.setError("Please enter password")
+                return@setOnClickListener
+            } else if(TextUtils.isEmpty(repeatPasswordET.text.toString())){
+                repeatPasswordET.setError("Please enter repeat password")
+                return@setOnClickListener
+            }else if(passwordET.text.toString() != repeatPasswordET.text.toString()){
+                repeatPasswordET.setError("Password and repeat password are not the same")
                 return@setOnClickListener
             }
 

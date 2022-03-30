@@ -41,7 +41,12 @@ class DetailComicActivity : AppCompatActivity() {
     }
 
     private fun commentClick(comic: comicItem) {
-
+        commentBtn.setOnClickListener {
+            val intent = Intent(this, CommentActivity::class.java)
+            intent.putExtra("comicID", comic.id)
+            intent.putExtra("userUID", user.UID)
+            startActivity(intent)
+        }
     }
 
     private fun followClick(comic: comicItem) {

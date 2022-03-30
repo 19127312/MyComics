@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.khtn.ratevid.R
+import com.khtn.ratevid.activity.FollowingListActivity
 import com.khtn.ratevid.activity.LoginActivity
 import com.khtn.ratevid.model.userItem
 import kotlinx.android.synthetic.main.change_password_dialog.view.*
@@ -39,8 +40,16 @@ class ProfileFragment(user: userItem) : Fragment() {
         updateUsername()
         changePassword()
         logout()
+        followList()
     }
 
+    private fun followList() {
+        FollowingListBtn.setOnClickListener {
+            val intent= Intent(context, FollowingListActivity::class.java)
+            intent.putExtra("user",curUser)
+            startActivity(intent)
+        }
+    }
 
 
     fun init (){

@@ -31,7 +31,6 @@ class PicListAdapter(var context:Activity,var imgs : ArrayList<picItem>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val selectImage  = imgs[position]
-        var img = holder.image
         Glide.with(context).load(selectImage.imgURL).into(holder.image)
 
     }

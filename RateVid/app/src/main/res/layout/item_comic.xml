@@ -23,7 +23,9 @@
         android:layout_height="46dp"
         android:gravity="center"
         android:text="TextView"
+        android:fontFamily="@font/baron_neue_black"
         app:layout_constraintEnd_toEndOf="@+id/thumbnailImg"
         app:layout_constraintStart_toStartOf="@+id/thumbnailImg"
         app:layout_constraintTop_toBottomOf="@+id/thumbnailImg" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

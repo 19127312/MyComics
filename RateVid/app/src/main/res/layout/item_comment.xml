@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#0f0f0f"
+            android:textSize="20sp"
+            android:text="He"
+            android:fontFamily="@font/sf_ui_display_bold"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="5"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/del_comment"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/layout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="9dp"
+        android:layout_toRightOf="@+id/edit_comment"
+        app:srcCompat="@drawable/ic_delete" />
+
+    <ImageView
+        android:id="@+id/edit_comment"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/layout"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_edit" />
+
+</RelativeLayout>

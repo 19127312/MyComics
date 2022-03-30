@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.khtn.ratevid.R
+import com.khtn.ratevid.activity.CommentActivity
 import com.khtn.ratevid.adapter.ChapterAdapter
 import com.khtn.ratevid.model.comicItem
 import kotlinx.android.synthetic.main.activity_detail_comic_admin.*
@@ -51,6 +53,16 @@ class DetailComicAdminActivity : AppCompatActivity() {
         changeComicProperties(comic)
         addChapter(comic)
         deleteChapter(comic)
+        commentSection(comic)
+    }
+
+    private fun commentSection(comic: comicItem) {
+        watchCommentBtn.setOnClickListener {
+            val intent = Intent(this, CommentActivity::class.java)
+            intent.putExtra("comicID", comic.id)
+            intent.putExtra("userUID", "Admin")
+            startActivity(intent)
+        }
     }
 
     private fun deleteChapter(comic: comicItem) {

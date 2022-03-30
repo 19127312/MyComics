@@ -165,6 +165,8 @@ class AddChapter : AppCompatActivity() {
         if(isUpload){
             chapterNumber+=1
             databaseReference.child("comic").child(comicID).child("lastestChapter").setValue(chapterNumber)
+            databaseReference.child("comic").child(comicID).child("updatedTime").setValue(System.currentTimeMillis())
+
             val replyIntent = Intent()
             setResult(Activity.RESULT_OK, replyIntent)
 

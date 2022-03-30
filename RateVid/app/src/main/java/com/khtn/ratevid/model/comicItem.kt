@@ -9,10 +9,11 @@ class comicItem : Serializable {
      var description: String?=""
      var author: String?=""
      var lastestChapter: Int?=1
-    var likeNumber:Int ?=0
+     var likeNumber:Int ?=0
+     var updatedTime:Long?=0
 
      constructor(){}
-     constructor(name: String?, thumbnail: String?,id:String?,description: String?,author:String?,lastestChapter:Int?, likeNumber: Int?){
+     constructor(name: String?, thumbnail: String?,id:String?,description: String?,author:String?,lastestChapter:Int?, likeNumber: Int?,updatedTime:Long?){
          this.name=name
          this.thumbnail=thumbnail
          this.id=id
@@ -20,5 +21,6 @@ class comicItem : Serializable {
          this.author=author
          this.lastestChapter=lastestChapter
          this.likeNumber=likeNumber
+         this.updatedTime= updatedTime
      }
  }

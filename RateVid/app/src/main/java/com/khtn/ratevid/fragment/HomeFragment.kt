@@ -101,7 +101,8 @@ class HomeFragment (user: userItem): Fragment() {
                 }
                 startActivity(intent)
             }
-        })    }
+        })
+    }
 
     private fun loadDataComic() {
 
@@ -114,8 +115,7 @@ class HomeFragment (user: userItem): Fragment() {
                         val modelComic = item.getValue(comicItem::class.java)
                         comicArray.add(modelComic!!)
                     }
-                    comicArray.reverse()
-                    adapter.notifyDataSetChanged()
+                    heap_sort(comicArray)
                     for( comic in comicArray){
                         tempComics.add(comic)
                     }
@@ -159,6 +159,57 @@ class HomeFragment (user: userItem): Fragment() {
             val intent= Intent(context, AddComic::class.java)
             startActivity(intent)
         }
+    }
+    fun swap(A: ArrayList<comicItem>?, i: Int, j: Int) {
+        var temp = A?.get(i)
+        A?.set(i, A?.get(j))
+        if (temp != null) {
+            A?.set(j, temp)
+        }
+    }
+
+    fun max_heapify(A: ArrayList<comicItem>?,heapSize:Int, i: Int) {
+        var l = 2 * i;
+        var r = 2 * i+1;
+        var largest: Int;
+
+        if ((l <= heapSize - 1) && (A?.get(l)?.updatedTime!! < A?.get(i).updatedTime!!)) {
+            largest = l;
+        } else
+            largest = i
+
+        if ((r <= heapSize - 1) && (A?.get(r)?.updatedTime!! < A?.get(l)?.updatedTime!!)) {
+            largest = r
+        }
+
+        if (largest != i) {
+            swap(A, i, largest);
+            max_heapify(A,heapSize, largest);
+        }
+    }
+
+    fun heap_sort(A: ArrayList<comicItem>?) {
+        var heapSize = A?.size
+        if (heapSize != null) {
+            for (i in heapSize / 2 downTo 0) {
+                if (heapSize != null) {
+                    max_heapify(A,heapSize, i)
+                }
+            }
+        }
+        if (A != null) {
+            for (i in A.size - 1 downTo 1) {
+                swap(A, i, 0)
+                if (heapSize != null) {
+                    heapSize = heapSize - 1
+                }
+                if (heapSize != null) {
+                    max_heapify(A,heapSize, 0)
+                }
+
+            }
+        }
+        adapter.notifyDataSetChanged()
     }
 
 }

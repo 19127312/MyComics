@@ -71,6 +71,7 @@ class AddComic : AppCompatActivity() {
                     hashMap.put("author", author)
                     hashMap.put("description", description)
                     hashMap.put("lastestChapter", 1)
+                    hashMap.put("updatedTime", System.currentTimeMillis())
 
                     databaseReference.child("comic").child(comicID).setValue(hashMap)
                         .addOnSuccessListener { taskSnapshot ->

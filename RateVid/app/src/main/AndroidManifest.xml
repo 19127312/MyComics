@@ -15,48 +15,53 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
         android:theme="@style/Theme.RateVid">
         <activity
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
+            android:name=".activity.CommentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.FollowingListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.PicListActivity"
-            android:exported="false" />
-        <activity
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.DetailComicActivity"
-            android:exported="false" />
-        <activity
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".adminScreen.DetailComicAdminActivity"
-            android:exported="false" />
-        <activity
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".adminScreen.AddComic"
-            android:exported="false" />
-        <activity
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".adminScreen.AddChapter"
-            android:exported="false" />
-        <activity
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.ForgetPasswordActivity"
-            android:exported="false" />
-        <activity
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.RegisterActivity"
-            android:exported="false" />
-        <activity
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.LoginActivity"
-            android:exported="true">
+            android:configChanges="orientation"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -64,10 +69,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
             android:name=".activity.MainActivity"
-            android:exported="false" />
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

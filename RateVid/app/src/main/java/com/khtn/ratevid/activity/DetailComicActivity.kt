@@ -162,7 +162,9 @@ class DetailComicActivity : AppCompatActivity() {
         authorTV.setText(comic.author)
 
         //Description
+
         descriptionTV.setText(comic.description)
+        descriptionTV.isEnabled=false
         //Like
         likenumberTV.text = comic.likeNumber.toString()
         loadStatusLike()

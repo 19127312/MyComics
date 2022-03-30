@@ -25,7 +25,7 @@ class TabPageAdapter(activity: FragmentActivity, private val tabCount:Int,user: 
 
         return when(position){
             0-> HomeFragment( user)
-            1-> RankingFragment()
+            1-> RankingFragment(user)
             2-> ProfileFragment(user)
             else->HomeFragment( user)
         }

@@ -13,4 +13,28 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="Theme.Comics.NormalEditText" parent="Widget.AppCompat.EditText">
+        <item name="background">@drawable/rounded_edittext</item>
+        <item name="paddingStart">10dp</item>
+        <item name="backgroundTint">@color/icon</item>
+    </style>
+    <style name="Theme.Comics.NormalEditText2" parent="Widget.AppCompat.EditText">
+        <item name="background">@drawable/rounded_edittext</item>
+        <item name="paddingStart">10dp</item>
+        <item name="backgroundTint">#FFFFFF</item>
+    </style>
+    <style name="Theme.Comics.TextInputLayout" parent="Widget.Design.TextInputLayout">
+        <item name="boxBackgroundColor">#FFF</item>
+        <item name="boxStrokeColor">#FFF</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="hintEnabled">false</item>
+        <item name="errorEnabled">false</item>
+        <item name="errorTextColor">#FF0000</item>
+    </style>
+    <style name="Theme.Moments.TextInputLayout.Password" parent="Theme.Comics.TextInputLayout">
+        <item name="passwordToggleEnabled">true</item>
+        <item name="passwordToggleTint">#C3C3C3</item>
+        <item name="passwordToggleDrawable">@drawable/hide_show_password</item>
+    </style>
 </resources>

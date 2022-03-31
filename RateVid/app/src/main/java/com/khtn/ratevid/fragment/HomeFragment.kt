@@ -111,6 +111,7 @@ class HomeFragment (user: userItem): Fragment() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     //Xoa list trc khi them vao moi lan vao app
                     comicArray.clear()
+                    tempComics.clear()
                     for (item in snapshot.children){
                         val modelComic = item.getValue(comicItem::class.java)
                         comicArray.add(modelComic!!)

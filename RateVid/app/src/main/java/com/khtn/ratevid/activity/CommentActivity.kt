@@ -32,8 +32,10 @@ class CommentActivity : AppCompatActivity() {
 
     private fun setupLayout() {
         adapterComment = CommentAdapter(this@CommentActivity, ListComment, comicID, userID)
-        recycle_comment.adapter = adapterComment
-        recycle_comment.layoutManager=LinearLayoutManager(this)
+        if(!recycle_comment.isComputingLayout){
+         recycle_comment.adapter = adapterComment
+            recycle_comment.layoutManager=LinearLayoutManager(this)
+        }
     }
 
     private fun addClick() {

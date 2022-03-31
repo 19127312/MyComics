@@ -3,6 +3,7 @@ package com.khtn.ratevid.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +15,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.khtn.ratevid.R
+import com.khtn.ratevid.model.comicItem
 import com.khtn.ratevid.model.commentItem
 
-class CommentAdapter(private var context: Context, private var ListComment: ArrayList<commentItem>?, private var comicID: String, private var userid: String): RecyclerView.Adapter<CommentAdapter.HolderComment>() {
+class CommentAdapter(private var context: Context, private var ListComment: ArrayList<commentItem>?, private var comicID: String, private var CurUserid: String): RecyclerView.Adapter<CommentAdapter.HolderComment>() {
 
     var database: DatabaseReference?=null
 
@@ -57,55 +59,103 @@ class CommentAdapter(private var context: Context, private var ListComment: Arra
 
         holder.content.text = content
 
-        hideButton(modelComment, holder)
+        hideButton(modelComment, holder,position)
 
         holder.delBtn.setOnClickListener {
+            if(CurUserid!="Admin"){
             val alert = AlertDialog.Builder(context)
             alert.setTitle("Delete Comment")
             alert.setMessage("Do you want to delete this comment?")
             alert.setPositiveButton("Delete") { _, _ -> deleteComment(timestamp,position) }
             alert.show()
+            }
+            else{
+                changeCommentDialog(timestamp,position,CurUserid)
+            }
         }
 
         holder.editBtn.setOnClickListener {
-            val edit = AlertDialog.Builder(context)
-            edit.setTitle("Edit Comment")
-            val layout: View = LayoutInflater.from(context).inflate(R.layout.edit_comment, null)
-            val editText: EditText = layout.findViewById(R.id.edit_cm)
-            val editBtn: Button = layout.findViewById(R.id.edit_button)
-            edit.setView(layout)
-            val editDialog: AlertDialog = edit.create()
-            editBtn.setOnClickListener {
-                val newComment= editText.text.toString()
-                if (TextUtils.isEmpty(newComment)){
-                    editText.error = "Please enter something"
-                    return@setOnClickListener
-                } else {
-                    editComment(timestamp, newComment, editDialog,position)
-                }
-            }
-            editDialog.show()
+            changeCommentDialog(timestamp,position,CurUserid)
         }
     }
 
-    private fun hideButton(modelComment: commentItem, holder: HolderComment){
-        if (modelComment.userid != userid){
+    fun changeCommentDialog(timestamp: String?,position:Int,userid:String?){
+        val edit = AlertDialog.Builder(context)
+        if(userid!="Admin"){
+            edit.setTitle("Edit Comment")
+
+        }else{
+            edit.setTitle("Delete Comment: Enter reason")
+
+        }
+        val layout: View = LayoutInflater.from(context).inflate(R.layout.edit_comment, null)
+        val editText: EditText = layout.findViewById(R.id.edit_cm)
+        val editBtn: Button = layout.findViewById(R.id.edit_button)
+        edit.setView(layout)
+        val editDialog: AlertDialog = edit.create()
+        editBtn.setOnClickListener {
+            var newComment= editText.text.toString()
+            if(userid=="Admin"){
+                newComment="Deleted: "+newComment
+            }
+
+            if (TextUtils.isEmpty(newComment)){
+                editText.error = "Please enter something"
+                return@setOnClickListener
+            } else {
+                editComment(timestamp, newComment, editDialog,position,userid)
+            }
+        }
+        editDialog.show()
+    }
+    private fun hideButton(modelComment: commentItem, holder: HolderComment,position:Int){
+        if (modelComment.userid != CurUserid){
             holder.delBtn.visibility = View.INVISIBLE
             holder.editBtn.visibility = View.INVISIBLE
         }
-        if( userid=="Admin"){
+        if( CurUserid=="Admin"){
             holder.delBtn.visibility = View.VISIBLE
         }
+        if(modelComment.content?.contains("Deleted") == true){
+            holder.editBtn.visibility = View.INVISIBLE
+            val ref= FirebaseDatabase.getInstance().getReference("comic/$comicID/comment/${modelComment.timestamp}/DeleteTimestamp")
+            ref.addListenerForSingleValueEvent(object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(snapshot.exists()){
+                    var delete= snapshot.getValue(String::class.java)
+                    var deleteTime=delete!!.toLong()
+                        //Comment bị xóa sau 1 ngày
+                    if( System.currentTimeMillis()- deleteTime!! >86400000){
+                        deleteComment(modelComment.timestamp, position)
+                    }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+
+        }
+
     }
 
-    private fun editComment(time: String?, text: String, editDialog: AlertDialog,position: Int) {
+    private fun editComment(time: String?, text: String, editDialog: AlertDialog,position: Int,userid: String?) {
         val alert = AlertDialog.Builder(context)
+        if(userid!="Admin"){
         alert.setTitle("Edit Comment")
         alert.setMessage("Do you want to edit this comment?")
+        }else{
+            alert.setTitle("Delete Comment")
+            alert.setMessage("Do you want to delete this comment?")
+        }
         alert.setPositiveButton("Accept") { _, _ ->
             database = FirebaseDatabase.getInstance().getReference("comic/$comicID/comment/$time")
             database!!.child("content").setValue(text).addOnSuccessListener {
-                notifyItemChanged(position)
+                database!!.child("DeleteTimestamp").setValue(System.currentTimeMillis().toString()).addOnSuccessListener {
+                    notifyItemChanged(position)
+
+                }
             }
         }
         alert.setNegativeButton("No") { dialog, _ -> dialog.cancel() }

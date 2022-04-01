@@ -32,10 +32,18 @@
         <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/layout/item_ranking.xml" value="0.33" />
         <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/layout/ranking_item.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/RateVideo/RateVid/app/src/main/res/layout/row.xml" value="0.22" />
+        <entry key="..\:/Users/MTBH/Desktop/RateVideo/RateVid/app/src/main/res/drawable/ic_add.xml" value="0.1" />
+        <entry key="..\:/Users/MTBH/Desktop/RateVideo/RateVid/app/src/main/res/drawable/rounded_btn.xml" value="0.1" />
         <entry key="..\:/Users/MTBH/Desktop/RateVideo/RateVid/app/src/main/res/drawable/rounded_edittext.xml" value="0.1" />
+        <entry key="..\:/Users/MTBH/Desktop/RateVideo/RateVid/app/src/main/res/layout/activity_add_chapter.xml" value="0.25" />
+        <entry key="..\:/Users/MTBH/Desktop/RateVideo/RateVid/app/src/main/res/layout/activity_add_comic.xml" value="0.24483306836248012" />
         <entry key="..\:/Users/MTBH/Desktop/RateVideo/RateVid/app/src/main/res/layout/activity_forget_password.xml" value="0.11041666666666666" />
         <entry key="..\:/Users/MTBH/Desktop/RateVideo/RateVid/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/MTBH/Desktop/RateVideo/RateVid/app/src/main/res/layout/activity_register.xml" value="0.16" />
+        <entry key="..\:/Users/MTBH/Desktop/RateVideo/RateVid/app/src/main/res/layout/edit_comment.xml" value="0.25" />
+        <entry key="..\:/Users/MTBH/Desktop/RateVideo/RateVid/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
+        <entry key="..\:/Users/MTBH/Desktop/RateVideo/RateVid/app/src/main/res/layout/item_chosen.xml" value="0.2" />
+        <entry key="..\:/Users/MTBH/Desktop/RateVideo/RateVid/app/src/main/res/layout/item_ranking.xml" value="0.22826086956521738" />
       </map>
     </option>
   </component>

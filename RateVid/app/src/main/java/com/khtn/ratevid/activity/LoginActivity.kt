@@ -67,13 +67,22 @@ class LoginActivity : AppCompatActivity() {
                     var user = userItem(
                         snapshot.child("UID").value as String?,
                         snapshot.child("Type").value as String?,
-                        snapshot.child("UserName").value as String?
+                        snapshot.child("UserName").value as String?,
+                        snapshot.child("status").value as String?,
+                        snapshot.child("reason").value as String?
+
                     )
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    intent.putExtra("user", user)
-                    startActivity(intent)
-                    finish()
-                    dialog.dismiss()
+                    if(user.status!="Banned"){
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        intent.putExtra("user", user)
+                        startActivity(intent)
+                        finish()
+                        dialog.dismiss()
+                    }else{
+                        Toast.makeText(this@LoginActivity,"You have been banned for ${user.reason}",Toast.LENGTH_LONG).show()
+                        dialog.dismiss()
+
+                    }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -99,13 +108,21 @@ class LoginActivity : AppCompatActivity() {
                             var user = userItem(
                                 snapshot.child("UID").value as String?,
                                 snapshot.child("Type").value as String?,
-                                snapshot.child("UserName").value as String?
+                                snapshot.child("UserName").value as String?,
+                                snapshot.child("status").value as String?,
+                                snapshot.child("reason").value as String?
                             )
-                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                            intent.putExtra("user", user)
-                            startActivity(intent)
-                            finish()
-                            dialog.dismiss()
+                            if(user.status!="Banned"){
+                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                intent.putExtra("user", user)
+                                startActivity(intent)
+                                finish()
+                                dialog.dismiss()
+                            }else{
+                                Toast.makeText(this@LoginActivity,"You have been banned for ${user.reason}",Toast.LENGTH_LONG).show()
+                                dialog.dismiss()
+
+                            }
                         }
 
                         override fun onCancelled(error: DatabaseError) {

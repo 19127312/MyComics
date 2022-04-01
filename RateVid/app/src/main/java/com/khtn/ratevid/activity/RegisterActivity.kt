@@ -59,6 +59,9 @@ class RegisterActivity : AppCompatActivity() {
                     currentUserDB?.child("UID")?.setValue(currentUser?.uid!!)
                     currentUserDB?.child("UserName")?.setValue(name)
                     currentUserDB?.child("Type")?.setValue("User")
+                    currentUserDB?.child("status")?.setValue("Active")
+                    currentUserDB?.child("reason")?.setValue("None")
+
                     finish()
 
                     //Thong bao tao thanh cong

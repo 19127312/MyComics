@@ -44,7 +44,7 @@
     <EditText
         android:id="@+id/infor"
         android:layout_width="306dp"
-        android:layout_height="46dp"
+        android:layout_height="48dp"
         android:layout_marginTop="48dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -64,5 +64,16 @@
         app:layout_constraintHorizontal_bias="0.422"
         app:layout_constraintStart_toStartOf="@+id/updateButton"
         app:layout_constraintTop_toBottomOf="@+id/updateButton" />
+
+    <Button
+        android:id="@+id/userList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="User List"
+        app:layout_constraintEnd_toEndOf="@+id/FollowingListBtn"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="@+id/FollowingListBtn"
+        app:layout_constraintTop_toBottomOf="@+id/FollowingListBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

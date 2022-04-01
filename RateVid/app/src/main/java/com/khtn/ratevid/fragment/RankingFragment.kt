@@ -43,7 +43,7 @@ class RankingFragment (user: userItem): Fragment() {
             recyclerView.layoutManager= LinearLayoutManager(context)
         }
 
-        adapter= RankingAdapter(comicArray)
+        adapter= context?.let { RankingAdapter(it,comicArray) }!!
         if (recyclerView != null) {
             recyclerView.adapter=adapter
         }

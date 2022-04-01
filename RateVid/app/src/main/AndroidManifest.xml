@@ -17,14 +17,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RateVid">
         <activity
+            android:name=".adminScreen.ListUserActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.CommentActivity"
-            android:exported="false"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FollowingListActivity"
-            android:exported="false"
             android:configChanges="orientation"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.PicListActivity"

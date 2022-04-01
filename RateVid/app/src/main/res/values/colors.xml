@@ -22,4 +22,7 @@
     <color name="icon">#5EDDAB</color>
     <color name="light_green">#D4F5E9</color>
     <color name="grey">#E4E9F3</color>
+    <color name="rank1">#FFE5E7</color>
+    <color name="rank2">#FEF3D9</color>
+    <color name="active">#E3EEFF</color>
 </resources>

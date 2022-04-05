@@ -78,7 +78,6 @@
             android:backgroundTint="@color/ADD_Btn"
             android:text="Add thumbnail"
             android:textColor="@color/white"
-            app:icon="@drawable/ic_add_black"
             app:iconGravity="textStart"
             app:layout_constraintStart_toStartOf="@+id/desET"
             app:layout_constraintTop_toBottomOf="@+id/desET" />

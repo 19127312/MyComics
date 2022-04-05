@@ -39,7 +39,7 @@
         android:id="@+id/updateButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/rounded_btn"
         android:backgroundTint="@color/icon"
         android:text="Update Username"
@@ -66,32 +66,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/FollowingListBtn"
+        android:id="@+id/userList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/rounded_btn"
         android:backgroundTint="@color/icon"
-        android:text="Following List"
+        android:text="User List"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="@+id/updateButton"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/updateButton"
         app:layout_constraintTop_toBottomOf="@+id/updateButton" />
-
-    <Button
-        android:id="@+id/userList"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/rounded_btn"
-        android:backgroundTint="@color/icon"
-        android:text="User List"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/FollowingListBtn"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="@+id/FollowingListBtn"
-        app:layout_constraintTop_toBottomOf="@+id/FollowingListBtn" />
 
     <TextView
         android:id="@+id/textView15"

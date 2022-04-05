@@ -36,23 +36,31 @@ class ProfileFragment(user: userItem) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init ()
+        init()
         loadProfile()
         updateUsername()
         changePassword()
         logout()
-        followList()
-        userList()
+        list()
     }
-
+    private fun list(){
+        if(curUser.Type=="User"){
+            followList()
+        }
+        else if(curUser.Type == "Admin"){
+            userList()
+        }
+    }
     private fun followList() {
-        FollowingListBtn.setOnClickListener {
+        userList.setText("Following List")
+        userList.setOnClickListener {
             val intent= Intent(context, FollowingListActivity::class.java)
             intent.putExtra("user",curUser)
             startActivity(intent)
         }
     }
     private fun userList() {
+        userList.setText("User List")
         userList.setOnClickListener {
             val intent= Intent(context, ListUserActivity::class.java)
             startActivity(intent)

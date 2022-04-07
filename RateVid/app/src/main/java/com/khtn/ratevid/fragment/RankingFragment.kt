@@ -12,6 +12,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.khtn.ratevid.FirebaseUlti
 import com.khtn.ratevid.R
 import com.khtn.ratevid.activity.DetailComicActivity
 import com.khtn.ratevid.adapter.ComicAdapter
@@ -56,25 +57,14 @@ class RankingFragment (user: userItem): Fragment() {
         itemComicClick()
     }
     private fun loadDataComic() {
-
-        val ref= FirebaseDatabase.getInstance().getReference("comic")
-        ref.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                //Xoa list trc khi them vao moi lan vao app
+        FirebaseUlti.readComicData(object: FirebaseUlti.FirebaseCallbackComicItem{
+            override fun onCallback(arrayComicItem: ArrayList<comicItem>) {
                 comicArray.clear()
-                for (item in snapshot.children){
-                    val modelComic = item.getValue(comicItem::class.java)
-                    comicArray.add(modelComic!!)
-                }
+                comicArray.addAll(arrayComicItem)
                 heap_sort(comicArray)
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                adapter.notifyDataSetChanged()
             }
         })
-
     }
 
     private fun itemComicClick() {

@@ -9,6 +9,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.khtn.ratevid.FirebaseUlti
 import com.khtn.ratevid.R
 import com.khtn.ratevid.adapter.UserAdapter
 import com.khtn.ratevid.model.comicItem
@@ -30,9 +31,7 @@ class ListUserActivity : AppCompatActivity() {
         loadUser()
         setupLayout()
         searchChange()
-
     }
-
     private fun searchChange() {
         searchName.setOnQueryTextListener(object: SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -40,7 +39,6 @@ class ListUserActivity : AppCompatActivity() {
                 return true
 
             }
-
             override fun onQueryTextChange(p0: String?): Boolean {
                 userList.clear()
                 var text=p0.toString()
@@ -58,7 +56,6 @@ class ListUserActivity : AppCompatActivity() {
                     adapter.notifyDataSetChanged()
 
                 }
-
                 return false
             }
 
@@ -71,27 +68,15 @@ class ListUserActivity : AppCompatActivity() {
         customListView?.layoutManager = LinearLayoutManager(this)    }
 
     private fun loadUser() {
-        val ref= FirebaseDatabase.getInstance().getReference("profile")
-        ref.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+        FirebaseUlti.readUserList(object: FirebaseUlti.FirebaseCallbackUserList{
+            override fun onCallback(arrayUserList: ArrayList<userItem>) {
                 userList.clear()
+                userList.addAll(arrayUserList)
                 tempUser.clear()
-                for (item in snapshot.children){
-                    val user = item.getValue(userItem::class.java)
-                    if (user != null ) {
-                        if( user.Type!="Admin"){
-                            userList.add(user)
-                        }
-                    }
-                }
-                for( user in userList){
+                for (user in userList) {
                     tempUser.add(user)
                 }
                 adapter.notifyDataSetChanged()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
             }
         })
     }

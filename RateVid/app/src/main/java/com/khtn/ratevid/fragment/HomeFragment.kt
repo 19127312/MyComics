@@ -10,9 +10,7 @@ import android.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
+import com.khtn.ratevid.FirebaseUlti
 import com.khtn.ratevid.R
 import com.khtn.ratevid.activity.DetailComicActivity
 import com.khtn.ratevid.adminScreen.AddComic
@@ -106,27 +104,20 @@ class HomeFragment (user: userItem): Fragment() {
 
     private fun loadDataComic() {
 
-            val ref= FirebaseDatabase.getInstance().getReference("comic")
-            ref.addValueEventListener(object: ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    //Xoa list trc khi them vao moi lan vao app
-                    comicArray.clear()
-                    tempComics.clear()
-                    for (item in snapshot.children){
-                        val modelComic = item.getValue(comicItem::class.java)
-                        comicArray.add(modelComic!!)
-                    }
-                    heap_sort(comicArray)
-                    for( comic in comicArray){
-                        tempComics.add(comic)
-                    }
+        //Gọi lại interface và implement lại hàm oncallback
+        FirebaseUlti.readComicData(object: FirebaseUlti.FirebaseCallbackComicItem{
+            override fun onCallback(arrayComicItem: ArrayList<comicItem>) {
+                comicArray.clear()
+                tempComics.clear()
+                comicArray.addAll(arrayComicItem)
+                heap_sort(comicArray)
+                for (comic in comicArray) {
+                    tempComics.add(comic)
                 }
+                adapter.notifyDataSetChanged()
+            }
 
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            })
-
+        })
     }
 
     private fun setupLayout() {

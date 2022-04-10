@@ -8,6 +8,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.khtn.ratevid.FirebaseUtil
 import com.khtn.ratevid.R
 import com.khtn.ratevid.adapter.PicAdapter
 import com.khtn.ratevid.adapter.PicListAdapter
@@ -42,21 +43,14 @@ class PicListActivity : AppCompatActivity() {
     }
 
     private fun getPic() {
-        val ref= FirebaseDatabase.getInstance().getReference("comic").child(comicID).child("chapter").child(chapterNumber.toString())
-        ref.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (item in snapshot.children){
-                    val modelComic = item.getValue(picItem::class.java)
-                    if (modelComic != null) {
-                        imgsList.add(modelComic)
-                    }
-                }
+        FirebaseUtil.readPicInChapter(comicID,chapterNumber,object: FirebaseUtil.FirebaseCallbackPicList{
+            override fun onCallback(arrayPic: ArrayList<picItem>) {
+                imgsList.clear()
+                imgsList.addAll(arrayPic)
                 adapter.notifyDataSetChanged()
+
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
         })
     }
 }

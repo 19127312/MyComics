@@ -8,14 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.khtn.ratevid.FirebaseUlti
+import com.khtn.ratevid.FirebaseUtil
 import com.khtn.ratevid.R
 import com.khtn.ratevid.activity.DetailComicActivity
-import com.khtn.ratevid.adapter.ComicAdapter
 import com.khtn.ratevid.adapter.RankingAdapter
 import com.khtn.ratevid.adminScreen.DetailComicAdminActivity
 import com.khtn.ratevid.model.comicItem
@@ -52,12 +47,11 @@ class RankingFragment (user: userItem): Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         loadDataComic()
         itemComicClick()
     }
     private fun loadDataComic() {
-        FirebaseUlti.readComicData(object: FirebaseUlti.FirebaseCallbackComicItem{
+        FirebaseUtil.readComicData(object: FirebaseUtil.FirebaseCallbackComicItem{
             override fun onCallback(arrayComicItem: ArrayList<comicItem>) {
                 comicArray.clear()
                 comicArray.addAll(arrayComicItem)

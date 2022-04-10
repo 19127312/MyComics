@@ -12,13 +12,13 @@ import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.khtn.ratevid.FirebaseUtil
 import com.khtn.ratevid.R
 import kotlinx.android.synthetic.main.activity_add_comic.*
+import kotlinx.android.synthetic.main.activity_detail_comic_admin.*
 
 class AddComic : AppCompatActivity() {
     var thumbnail: Uri? =null
-    private  val storageReference= FirebaseStorage.getInstance().reference
-    private val databaseReference = FirebaseDatabase.getInstance().reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,40 +53,23 @@ class AddComic : AppCompatActivity() {
         startActivityForResult(i,1111)
     }
     private fun uploadComic(name: String, author: String, description: String) {
-        val comicID = "" + System.currentTimeMillis()
-
         val view = findViewById<View>(R.id.root)
         val snackbar: Snackbar = Snackbar.make(view, "Uploading", Snackbar.LENGTH_INDEFINITE)
         snackbar.show()
-        val path = "${comicID}/thumbnail.png"
-        val uploadTask = thumbnail?.let { storageReference.child(path).putFile(it) }
-        if (uploadTask != null) {
-            uploadTask.addOnSuccessListener {
-                val downloadURLTask = storageReference.child(path).downloadUrl
-                downloadURLTask.addOnSuccessListener {
-                    var hashMap: HashMap<String, Any> = HashMap()
-                    hashMap.put("thumbnail", it.toString())
-                    hashMap.put("id", comicID)
-                    hashMap.put("name", name)
-                    hashMap.put("author", author)
-                    hashMap.put("description", description)
-                    hashMap.put("lastestChapter", 1)
-                    hashMap.put("updatedTime", System.currentTimeMillis())
-
-                    databaseReference.child("comic").child(comicID).setValue(hashMap)
-                        .addOnSuccessListener { taskSnapshot ->
-                            Toast.makeText(this, "Manga uploaded successfully", Toast.LENGTH_LONG)
-                                .show()
-                            finish()
-                        }
-                        .addOnFailureListener { e ->
-                            snackbar.dismiss()
-                            Toast.makeText(this, "${e.message}", Toast.LENGTH_LONG).show()
-                        }
+        FirebaseUtil.uploadComic(name, author, description, thumbnail!!,object:FirebaseUtil.FirebaseCallbackUpdate{
+            override fun onCallback(status: String) {
+                if(status=="Success"){
+                    Toast.makeText(this@AddComic, "Manga uploaded successfully", Toast.LENGTH_LONG)
+                        .show()
+                    finish()
+                }else if( status=="Fail"){
+                    snackbar.dismiss()
+                    Toast.makeText(this@AddComic, "Manga uploaded failed", Toast.LENGTH_LONG).show()
                 }
-
             }
-        }
+
+        } )
+
 
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import com.khtn.ratevid.FirebaseUtil
 import com.khtn.ratevid.R
 import com.khtn.ratevid.activity.CommentActivity
 import com.khtn.ratevid.adapter.ChapterAdapter
@@ -33,7 +34,6 @@ import kotlinx.android.synthetic.main.activity_login.*
 class DetailComicAdminActivity : AppCompatActivity() {
 
     var thumbnail: Uri? =null
-    private  var storageReference= FirebaseStorage.getInstance().reference
     private var databaseReference = FirebaseDatabase.getInstance().reference
 
     private val IMAGE_PICK_GALLARY_CODE=100
@@ -158,43 +158,35 @@ class DetailComicAdminActivity : AppCompatActivity() {
     fun updateFirebase(comic: comicItem,property:String , editText:EditText){
         var snackbar = Snackbar.make(scrollRoot, "Updating", Snackbar.LENGTH_INDEFINITE)
         snackbar.show()
-        databaseReference!!.child("comic").child(comic?.id!!).child(property).setValue(editText.text.toString()).addOnSuccessListener {
-            snackbar.dismiss()
-            snackbar = Snackbar.make(scrollRoot, "Update successfully", Snackbar.LENGTH_SHORT)
-            snackbar.show()
-            editText.clearFocus()
-        }
+        FirebaseUtil.updatePropertyComic(comic, property, editText.text.toString(), object: FirebaseUtil.FirebaseCallbackUpdate{
+            override fun onCallback(status: String) {
+                snackbar.dismiss()
+                if(status=="Success"){
+                    snackbar = Snackbar.make(scrollRoot, "Update successfully", Snackbar.LENGTH_SHORT)
+                }else if( status=="Fail"){
+                    snackbar = Snackbar.make(scrollRoot, "Failed. Something wrong", Snackbar.LENGTH_SHORT)
+                }
+                snackbar.show()
+                editText.clearFocus()
+            }
+        })
+
     }
 
     fun uploadThumbnail(comic: comicItem){
-        val path = "${comic.id}/thumbnail.png"
-        val uploadTask = thumbnail?.let { storageReference.child(path).putFile(it) }
-        if (uploadTask != null) {
-            var snackbar = Snackbar.make(scrollRoot, "Updating", Snackbar.LENGTH_INDEFINITE)
-            snackbar.show()
-
-            uploadTask.addOnSuccessListener {
-                val downloadURLTask = storageReference.child(path).downloadUrl
-                downloadURLTask.addOnSuccessListener {
-
-
-                    databaseReference!!.child("comic").child(comic?.id!!).child("thumbnail").setValue(it.toString()).addOnSuccessListener {
-                        snackbar.dismiss()
-                        snackbar = Snackbar.make(scrollRoot, "Update successfully", Snackbar.LENGTH_SHORT)
-                        snackbar.show()
-                    }
-                        .addOnFailureListener {
-                            snackbar.dismiss()
-                            snackbar = Snackbar.make(scrollRoot, "Update failed!!!", Snackbar.LENGTH_SHORT)
-                            snackbar.show()
-                            Toast.makeText(this, "${it.message}", Toast.LENGTH_LONG).show()
-                        }
-
-
+        var snackbar = Snackbar.make(scrollRoot, "Updating", Snackbar.LENGTH_INDEFINITE)
+        snackbar.show()
+        FirebaseUtil.updateThumbnail(comic, thumbnail!!,object: FirebaseUtil.FirebaseCallbackUpdate{
+            override fun onCallback(status: String) {
+                snackbar.dismiss()
+                if(status=="Success"){
+                    snackbar = Snackbar.make(scrollRoot, "Update successfully", Snackbar.LENGTH_SHORT)
+                }else if( status=="Fail"){
+                    snackbar = Snackbar.make(scrollRoot, "Failed. Something wrong", Snackbar.LENGTH_SHORT)
                 }
-
+                snackbar.show()
             }
-        }
+        })
     }
     private fun setupLayout(comic: comicItem) {
         //Image
@@ -220,7 +212,6 @@ class DetailComicAdminActivity : AppCompatActivity() {
                 intent.putExtra("comicID",comic.id)
                 intent.putExtra("chapterNumber",position+1)
                 intent.putExtra("isUpdate",true)
-
                 startActivity(intent)
 
             }
@@ -229,32 +220,13 @@ class DetailComicAdminActivity : AppCompatActivity() {
 
     }
     private fun loadChapter() {
-        FirebaseDatabase.getInstance().getReference("comic").child(comic.id.toString()).child("lastestChapter").addValueEventListener(
-            object: ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if(snapshot.exists()){
-
-
-
-                        chapters.clear()
-                        adapter.notifyDataSetChanged()
-                        var number = snapshot.getValue(Int::class.java)
-                        for (i in 1..number!! - 1) {
-                            chapters.add(i)
-
-                        }
-                        chapters.reverse()
-                        adapter.notifyDataSetChanged()
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-            })
-
-
+        FirebaseUtil.readChapters(comic, object : FirebaseUtil.FirebaseCallbackChapterList{
+            override fun onCallback(arrayChapter: ArrayList<Int>) {
+                chapters.clear()
+                chapters.addAll(arrayChapter)
+                adapter.notifyDataSetChanged()
+            }
+        })
     }
 
 

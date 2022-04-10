@@ -79,23 +79,12 @@ class ComicFollowAdapter(var user:userItem,var context: Context, var items:Array
 
             builder.setPositiveButton("YES") { dialog, which -> // remove the the manga and close the dialog
 
-                var followComic = FirebaseDatabase.getInstance().getReference("profile/${user.UID}/followComic")
+                var followComic = FirebaseDatabase.getInstance().getReference("profile/${user.UID}/followComic").child("${item.id}")!!
                 followComic!!.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         // If the followComic is existed
                         if (snapshot.exists()) {
-                            followComic.child("${item.id}")!!
-                                .addListenerForSingleValueEvent(object : ValueEventListener {
-                                    //If this user has already follow this manga --> delete this manga from followed manga
-                                    override fun onDataChange(snapshot1: DataSnapshot) {
-                                        if (snapshot1.exists()) {
-                                            followComic.child("${item.id}")!!.removeValue()
-                                        }
-                                    }
-                                    override fun onCancelled(error: DatabaseError) {
-                                        TODO("No need")
-                                    }
-                                })
+                            followComic.removeValue()
                         }
                     }
                     override fun onCancelled(error: DatabaseError) {

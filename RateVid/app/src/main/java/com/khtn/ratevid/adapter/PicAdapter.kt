@@ -25,7 +25,6 @@ class PicAdapter(var view: View, var context:Activity, var imgs : ArrayList<picI
         val status = listItemView.findViewById<TextView>(R.id.status)
         val image=  listItemView.findViewById<ImageView>(R.id.chosenPic)
         val delete = listItemView.findViewById<Button>(R.id.deleteBtn)
-        //val upload = listItemView.findViewById<Button>(R.id.uploadBtn)
         val change= listItemView.findViewById<Button>(R.id.changeBtn)
     }
 

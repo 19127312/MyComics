@@ -5,18 +5,11 @@ import android.os.Bundle
 import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.khtn.ratevid.FirebaseUlti
+import com.khtn.ratevid.FirebaseUtil
 import com.khtn.ratevid.R
 import com.khtn.ratevid.adapter.UserAdapter
-import com.khtn.ratevid.model.comicItem
-import com.khtn.ratevid.model.picItem
 import com.khtn.ratevid.model.userItem
 import kotlinx.android.synthetic.main.activity_list_user.*
-import kotlinx.android.synthetic.main.fragment_home.*
 
 class ListUserActivity : AppCompatActivity() {
     lateinit var userList : ArrayList<userItem>
@@ -68,7 +61,7 @@ class ListUserActivity : AppCompatActivity() {
         customListView?.layoutManager = LinearLayoutManager(this)    }
 
     private fun loadUser() {
-        FirebaseUlti.readUserList(object: FirebaseUlti.FirebaseCallbackUserList{
+        FirebaseUtil.readUserList(object: FirebaseUtil.FirebaseCallbackUserList{
             override fun onCallback(arrayUserList: ArrayList<userItem>) {
                 userList.clear()
                 userList.addAll(arrayUserList)

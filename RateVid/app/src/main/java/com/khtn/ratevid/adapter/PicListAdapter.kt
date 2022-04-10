@@ -18,7 +18,6 @@ import com.khtn.ratevid.model.picItem
 class PicListAdapter(var context:Activity,var imgs : ArrayList<picItem>) :
     RecyclerView.Adapter<PicListAdapter.ViewHolder>() {
 
-    var posChange=0
     inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
         val image=  listItemView.findViewById<ImageView>(R.id.picItemIV)
     }

@@ -10,7 +10,7 @@ import android.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.khtn.ratevid.FirebaseUlti
+import com.khtn.ratevid.FirebaseUtil
 import com.khtn.ratevid.R
 import com.khtn.ratevid.activity.DetailComicActivity
 import com.khtn.ratevid.adminScreen.AddComic
@@ -105,7 +105,7 @@ class HomeFragment (user: userItem): Fragment() {
     private fun loadDataComic() {
 
         //Gọi lại interface và implement lại hàm oncallback
-        FirebaseUlti.readComicData(object: FirebaseUlti.FirebaseCallbackComicItem{
+        FirebaseUtil.readComicData(object: FirebaseUtil.FirebaseCallbackComicItem{
             override fun onCallback(arrayComicItem: ArrayList<comicItem>) {
                 comicArray.clear()
                 tempComics.clear()

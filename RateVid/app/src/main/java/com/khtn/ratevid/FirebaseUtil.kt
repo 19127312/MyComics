@@ -1,19 +1,21 @@
 package com.khtn.ratevid
 
+import android.content.Intent
 import android.net.Uri
 import android.view.View
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
+import com.khtn.ratevid.activity.MainActivity
 import com.khtn.ratevid.model.comicItem
+import com.khtn.ratevid.model.commentItem
 import com.khtn.ratevid.model.picItem
 import com.khtn.ratevid.model.userItem
+import kotlinx.android.synthetic.main.activity_detail_comic.*
 import kotlinx.android.synthetic.main.activity_detail_comic_admin.*
+import kotlinx.android.synthetic.main.activity_forget_password.*
 
 object FirebaseUtil {
     interface FirebaseCallbackComicItem{
@@ -33,6 +35,13 @@ object FirebaseUtil {
 
     }
 
+    interface  FirebaseCallbackUser{
+        fun onCallback(user: userItem)
+    }
+    interface FirebaseCallbackCommentList{
+        fun onCallback(arrayComment: ArrayList<commentItem>)
+
+    }
     fun readComicData(FirebaseCallback: FirebaseCallbackComicItem){
         var comicArray= ArrayList<comicItem>()
         val ref= FirebaseDatabase.getInstance().getReference("comic")
@@ -218,5 +227,150 @@ object FirebaseUtil {
 
                 }
             }
+    }
+
+    fun getBannedStatus(UID:String ,FirebaseCallback: FirebaseCallbackUser){
+        var databaseReference: DatabaseReference =FirebaseDatabase.getInstance().reference!!.child("profile")
+        databaseReference?.child(UID)?.addListenerForSingleValueEvent(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var user = userItem(
+                    snapshot.child("UID").value as String?,
+                    snapshot.child("Type").value as String?,
+                    snapshot.child("UserName").value as String?,
+                    snapshot.child("status").value as String?,
+                    snapshot.child("reason").value as String?
+                )
+                FirebaseCallback.onCallback( user)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+    }
+    fun getFollowStatus(UID:String ,comicID:String,FirebaseCallback: FirebaseCallbackUpdate){
+        FirebaseDatabase.getInstance().getReference("profile/${UID}/followComic").child("${comicID}")!!
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        FirebaseCallback.onCallback("Yes")
+                    }
+                    else {
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("No need")
+                }
+            })
+
+    }
+    fun getLikeStatus(UID:String ,comicID:String,FirebaseCallback: FirebaseCallbackUpdate){
+        FirebaseDatabase.getInstance().getReference("comic/${comicID}/likePerson").child("${UID}")!!
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        FirebaseCallback.onCallback("Yes")
+                    }
+                    else {
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("No need")
+                }
+            })
+
+    }
+
+    fun loginUser(email: String, password: String ,FirebaseCallback: FirebaseCallbackUpdate){
+        var auth: FirebaseAuth
+        auth = FirebaseAuth.getInstance()
+        auth.signInWithEmailAndPassword(email,password)
+            .addOnCompleteListener {
+                if(it.isSuccessful){
+                    FirebaseCallback.onCallback(auth?.uid!!)
+                }else{
+                    FirebaseCallback.onCallback("Fail")
+                }
+            }
+    }
+
+    fun forgetPass(email: String ,FirebaseCallback: FirebaseCallbackUpdate){
+        var auth: FirebaseAuth
+        auth = FirebaseAuth.getInstance()
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener{ task ->
+                if ( task.isSuccessful ){
+                    FirebaseCallback.onCallback("Success")
+                }else {
+                    FirebaseCallback.onCallback("Fail")
+                }
+            }
+    }
+
+    fun readCommentArray(comicID:String,FirebaseCallback: FirebaseCallbackCommentList ){
+        var ListComment= ArrayList<commentItem>()
+
+        val ref = FirebaseDatabase.getInstance().getReference("comic/$comicID/comment")
+        ref.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                ListComment.clear()
+                for (com in snapshot.children){
+                    val modelcomment = com.getValue(commentItem::class.java)
+                    if (modelcomment != null){
+                        ListComment.add(modelcomment)
+                    }
+                }
+                FirebaseCallback.onCallback(ListComment)
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+
+    fun getFollowComic(UID:String,FirebaseCallback: FirebaseCallbackComicItem ){
+        var comicArray= ArrayList<comicItem>()
+        var followRef= FirebaseDatabase.getInstance().getReference("profile/${UID}/followComic")
+        var followList= ArrayList<String>()
+        followRef.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    followList.clear()
+                    for( id in snapshot.children){
+                        followList.add(id.getValue().toString())
+                        val ref= FirebaseDatabase.getInstance().getReference("comic")
+                        ref.addListenerForSingleValueEvent(object: ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                //Xoa list trc khi them vao moi lan vao app
+                                comicArray.clear()
+                                for (item in snapshot.children){
+                                    val modelComic = item.getValue(comicItem::class.java)
+                                    if(modelComic?.id in followList){
+                                        comicArray.add(modelComic!!)
+                                    }
+                                }
+                                FirebaseCallback.onCallback(comicArray)
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+                        })
+                    }
+                }else{
+                    comicArray.clear()
+                    FirebaseCallback.onCallback(comicArray)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 }

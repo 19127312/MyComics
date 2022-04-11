@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.khtn.ratevid.FirebaseUtil
 import com.khtn.ratevid.R
 import com.khtn.ratevid.model.userItem
 import kotlinx.android.synthetic.main.activity_login.*
@@ -61,34 +62,23 @@ class LoginActivity : AppCompatActivity() {
         if (currentUser!=null){
             showLoadingDialog()
 
-            var databaseReference: DatabaseReference=FirebaseDatabase.getInstance().reference!!.child("profile")
-            databaseReference?.child(currentUser?.uid!!)?.addListenerForSingleValueEvent(object :ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    var user = userItem(
-                        snapshot.child("UID").value as String?,
-                        snapshot.child("Type").value as String?,
-                        snapshot.child("UserName").value as String?,
-                        snapshot.child("status").value as String?,
-                        snapshot.child("reason").value as String?
-
-                    )
-                    if(user.status!="Banned"){
+            FirebaseUtil.getBannedStatus(currentUser.uid,object: FirebaseUtil.FirebaseCallbackUser{
+                override fun onCallback(user: userItem) {
+                    if(user.status=="Banned"){
+                        Toast.makeText(this@LoginActivity,"You have been banned for ${user.reason}",Toast.LENGTH_LONG).show()
+                        dialog.dismiss()
+                    }
+                    else if(user.status=="Active"){
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         intent.putExtra("user", user)
                         startActivity(intent)
                         finish()
                         dialog.dismiss()
-                    }else{
-                        Toast.makeText(this@LoginActivity,"You have been banned for ${user.reason}",Toast.LENGTH_LONG).show()
-                        dialog.dismiss()
-
                     }
                 }
 
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
             })
+
 
         }
     }
@@ -98,45 +88,32 @@ class LoginActivity : AppCompatActivity() {
         var pass=_pass.trim{ it<= ' '}
 
         showLoadingDialog()
-        auth.signInWithEmailAndPassword(email,pass)
-            .addOnCompleteListener {
-                if(it.isSuccessful){
-
-                    var databaseReference: DatabaseReference=FirebaseDatabase.getInstance().reference!!.child("profile")
-                    databaseReference?.child( auth?.uid!!)?.addListenerForSingleValueEvent(object :ValueEventListener{
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            var user = userItem(
-                                snapshot.child("UID").value as String?,
-                                snapshot.child("Type").value as String?,
-                                snapshot.child("UserName").value as String?,
-                                snapshot.child("status").value as String?,
-                                snapshot.child("reason").value as String?
-                            )
-                            if(user.status!="Banned"){
+        FirebaseUtil.loginUser(email,pass,object :FirebaseUtil.FirebaseCallbackUpdate{
+            override fun onCallback(status: String) {
+                if(status!="Fail"){
+                    FirebaseUtil.getBannedStatus(status, object :FirebaseUtil.FirebaseCallbackUser{
+                        override fun onCallback(user: userItem) {
+                            if(user.status=="Banned"){
+                                Toast.makeText(this@LoginActivity,"You have been banned for ${user.reason}",Toast.LENGTH_LONG).show()
+                                dialog.dismiss()
+                            }
+                            else if(user.status=="Active"){
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 intent.putExtra("user", user)
                                 startActivity(intent)
                                 finish()
                                 dialog.dismiss()
-                            }else{
-                                Toast.makeText(this@LoginActivity,"You have been banned for ${user.reason}",Toast.LENGTH_LONG).show()
-                                dialog.dismiss()
-
                             }
                         }
-
-                        override fun onCancelled(error: DatabaseError) {
-                            TODO("Not yet implemented")
-                        }
                     })
-
-                    //Ket thuc
                 }else{
-                    //Neu dang nhap that bai
                     dialog.dismiss()
                     Toast.makeText(this@LoginActivity,"Login failed, please try again!", Toast.LENGTH_LONG).show()
                 }
             }
+
+        })
+
     }
 
 

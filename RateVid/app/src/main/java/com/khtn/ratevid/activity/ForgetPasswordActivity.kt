@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.khtn.ratevid.FirebaseUtil
 import com.khtn.ratevid.R
 import kotlinx.android.synthetic.main.activity_forget_password.*
 
@@ -24,9 +25,9 @@ class ForgetPasswordActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            auth.sendPasswordResetEmail(emailForgetET.text.toString())
-                .addOnCompleteListener{ task ->
-                    if ( task.isSuccessful ){
+            FirebaseUtil.forgetPass(emailForgetET.text.toString(),object :FirebaseUtil.FirebaseCallbackUpdate{
+                override fun onCallback(status: String) {
+                    if(status=="Success"){
                         Toast.makeText(
                             this@ForgetPasswordActivity,
                             "Email sent successfully to reset your password!",
@@ -34,14 +35,17 @@ class ForgetPasswordActivity : AppCompatActivity() {
                         ).show()
 
                         finish()
-                    }else {
+                    }else{
                         Toast.makeText(
                             this@ForgetPasswordActivity,
-                            task.exception!!.message.toString(),
+                            "Error",
                             Toast.LENGTH_LONG
                         ).show()
                     }
                 }
 
-        }    }
+            })
+
+        }
+    }
 }

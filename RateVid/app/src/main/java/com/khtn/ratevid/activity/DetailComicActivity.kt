@@ -11,6 +11,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.khtn.ratevid.FirebaseUtil
 import com.khtn.ratevid.R
 import com.khtn.ratevid.adapter.ChapterAdapter
 import com.khtn.ratevid.adminScreen.AddChapter
@@ -188,73 +189,37 @@ class DetailComicActivity : AppCompatActivity() {
                 intent.putExtra("comicID", comic.id)
                 intent.putExtra("chapterNumber", position + 1)
                 startActivity(intent)
-
             }
         })
         customListView.layoutManager = LinearLayoutManager(this)
     }
     fun loadStatusLike(){
-        var refLikePerson = FirebaseDatabase.getInstance().getReference("comic/${comic.id}/likePerson")
-        refLikePerson.child("${user.UID}")!!
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    // If this user like this manga
-                    if (snapshot.exists()) {
-                        likeBtn.setImageResource(R.drawable.ic_favorite_fill)
-                    }
-                    // If this user did not like this manga
-                    else {
-                     //Do nothing
-                    }
+        FirebaseUtil.getLikeStatus(user?.UID!!,comic?.id!!,object :FirebaseUtil.FirebaseCallbackUpdate{
+            override fun onCallback(status: String) {
+                if(status=="Yes"){
+                    likeBtn.setImageResource(R.drawable.ic_favorite_fill)
                 }
+            }
+        })
 
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("No need")
-                }
-            })
     }
     fun loadStatusFollow(){
-        var refLikePerson = FirebaseDatabase.getInstance().getReference("profile/${user.UID}/followComic")
-        refLikePerson.child("${comic.id}")!!
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        FollowBtn.text = "UNFOLLOW"
-                    }
-                    else {
-                    }
+        FirebaseUtil.getFollowStatus(user?.UID!!,comic?.id!!,object :FirebaseUtil.FirebaseCallbackUpdate{
+            override fun onCallback(status: String) {
+                if(status=="Yes"){
+                    FollowBtn.text = "UNFOLLOW"
                 }
+            }
+        })
 
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("No need")
-                }
-            })
     }
     private fun loadChapter() {
-        FirebaseDatabase.getInstance().getReference("comic").child(comic.id.toString())
-            .child("lastestChapter").addValueEventListener(
-            object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-
-                        chapters.clear()
-                        adapter.notifyDataSetChanged()
-                        var number = snapshot.getValue(Int::class.java)
-                        for (i in 1..number!! - 1) {
-                            chapters.add(i)
-
-                        }
-                        chapters.reverse()
-                        adapter.notifyDataSetChanged()
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-            })
-
-
+        FirebaseUtil.readChapters(comic, object : FirebaseUtil.FirebaseCallbackChapterList{
+            override fun onCallback(arrayChapter: ArrayList<Int>) {
+                chapters.clear()
+                chapters.addAll(arrayChapter)
+                adapter.notifyDataSetChanged()
+            }
+        })
     }
 }

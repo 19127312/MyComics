@@ -191,7 +191,8 @@ class DetailComicActivity : AppCompatActivity() {
             override fun onItemClick(position: Int) {
                 val intent = Intent(this@DetailComicActivity, PicListActivity::class.java)
                 intent.putExtra("comicID", comic.id)
-                intent.putExtra("chapterNumber", position + 1)
+                var pos= chapters.size-position;
+                intent.putExtra("chapterNumber", pos)
                 startActivity(intent)
             }
         })

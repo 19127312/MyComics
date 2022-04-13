@@ -3,6 +3,7 @@ package com.khtn.ratevid.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,12 +34,15 @@ class DetailComicActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_comic)
         val intent = intent
+
         comic = intent.getSerializableExtra("item") as comicItem
         user=intent.getSerializableExtra("user") as userItem
         setupLayout()
         likeClick(comic)
         followClick(comic)
         commentClick(comic)
+        descriptionTV.movementMethod = ScrollingMovementMethod()
+
     }
 
     private fun commentClick(comic: comicItem) {

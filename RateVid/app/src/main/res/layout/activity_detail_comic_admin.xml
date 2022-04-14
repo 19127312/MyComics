@@ -19,8 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-
-            android:text="Change description"
+            android:text="Description"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/authorComicET"
             app:layout_constraintTop_toBottomOf="@+id/authorComicET" />
 
@@ -42,7 +42,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Change author"
+            android:text="Author"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/changeThumbnailBtn"
             app:layout_constraintTop_toBottomOf="@+id/nameComicET" />
 
@@ -60,10 +61,12 @@
             android:id="@+id/changeThumbnailBtn"
             android:layout_width="180dp"
             android:layout_height="60dp"
-
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_btn"
+            android:backgroundTint="@color/ADD_Btn"
             android:text="Change thumbnail"
+            android:textColor="#FFFFFF"
             app:layout_constraintStart_toStartOf="@+id/thumbnailEditImageView"
             app:layout_constraintTop_toBottomOf="@+id/thumbnailEditImageView" />
 
@@ -74,44 +77,74 @@
             android:layout_marginTop="1dp"
             android:background="@drawable/bd_et"
             android:ems="10"
-
             android:inputType="textPersonName"
             app:layout_constraintStart_toStartOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/textView4"
             tools:ignore="SpeakableTextPresentCheck" />
 
+
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Change name"
+            android:layout_marginTop="20dp"
+            android:text="Name"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/changeThumbnailBtn"
             app:layout_constraintTop_toBottomOf="@+id/changeThumbnailBtn" />
 
-        <Button
+        <TextView
             android:id="@+id/updateNameComicBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="5dp"
+            android:clickable="true"
             android:text="Update"
+            android:textColor="#03A9F4"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/nameComicET"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/nameComicET"
             app:layout_constraintTop_toTopOf="@+id/nameComicET"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.483" />
 
-        <Button
+
+        <TextView
             android:id="@+id/updateAuthorBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:text="update"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Update"
+            android:textColor="#03A9F4"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/authorComicET"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toEndOf="@+id/authorComicET"
             app:layout_constraintTop_toTopOf="@+id/authorComicET"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.833" />
+
+        <TextView
+            android:id="@+id/updateDescriptionBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Update"
+            android:textColor="#03A9F4"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/descriptionChangeET"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.593"
+            app:layout_constraintStart_toEndOf="@+id/descriptionChangeET"
+            app:layout_constraintTop_toTopOf="@+id/descriptionChangeET"
+            app:layout_constraintVertical_bias="0.465" />
 
         <EditText
             android:id="@+id/descriptionChangeET"
@@ -126,49 +159,43 @@
             app:layout_constraintTop_toBottomOf="@+id/textView7"
             tools:ignore="SpeakableTextPresentCheck" />
 
-        <Button
-            android:id="@+id/updateDescriptionBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:text="update"
-            app:layout_constraintBottom_toBottomOf="@+id/descriptionChangeET"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.509"
-            app:layout_constraintStart_toEndOf="@+id/descriptionChangeET"
-            app:layout_constraintTop_toTopOf="@+id/descriptionChangeET"
-            app:layout_constraintVertical_bias="0.513" />
 
         <Button
             android:id="@+id/addChapterBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/rounded_btn"
+            android:backgroundTint="@color/ADD_Btn"
             android:text="Add new chapter"
-            app:layout_constraintEnd_toEndOf="@+id/descriptionChangeET"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="@+id/updateDescriptionBtn"
             app:layout_constraintStart_toStartOf="@+id/descriptionChangeET"
             app:layout_constraintTop_toBottomOf="@+id/descriptionChangeET" />
 
         <androidx.recyclerview.widget.RecyclerView
-            tools:listitem="@layout/item_chapter_admin"
             android:id="@+id/chapterRecycleView"
-            android:layout_width="match_parent"
-            android:layout_height="448dp"
-            android:layout_marginTop="40dp"
+            android:layout_width="411dp"
+            android:layout_height="444dp"
+            android:layout_marginTop="80dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addChapterBtn" />
+            app:layout_constraintTop_toBottomOf="@+id/addChapterBtn"
+            tools:listitem="@layout/item_chapter_admin" />
 
         <Button
             android:id="@+id/deleteComicBtn"
-            android:layout_width="180dp"
-            android:layout_height="60dp"
-
-            android:layout_marginStart="112dp"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="35dp"
             android:layout_marginTop="4dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_btn"
             android:backgroundTint="@color/DELETE_Btn"
             android:text="DELETE COMIC"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/chapterRecycleView"
             app:layout_constraintHorizontal_bias="0.025"
             app:layout_constraintStart_toStartOf="@+id/chapterRecycleView"
@@ -176,20 +203,25 @@
 
         <Button
             android:id="@+id/watchCommentBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="36dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/rounded_btn"
+            android:backgroundTint="@color/ADD_Btn"
             android:text="Go to comments"
-            app:layout_constraintBottom_toBottomOf="@+id/addChapterBtn"
-            app:layout_constraintEnd_toEndOf="@+id/updateDescriptionBtn"
-            app:layout_constraintTop_toTopOf="@+id/addChapterBtn"
-            app:layout_constraintVertical_bias="0.0" />
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="@+id/addChapterBtn"
+            app:layout_constraintStart_toStartOf="@+id/addChapterBtn"
+            app:layout_constraintTop_toBottomOf="@+id/addChapterBtn" />
 
         <Button
             android:id="@+id/uploadThumbnailBtn"
             android:layout_width="180dp"
             android:layout_height="60dp"
+            android:background="@drawable/rounded_btn"
+            android:backgroundTint="@color/ADD_Btn"
             android:text="Update thumbnail"
+            android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="@+id/changeThumbnailBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.515"

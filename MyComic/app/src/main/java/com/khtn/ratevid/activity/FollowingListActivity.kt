@@ -12,6 +12,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.khtn.ratevid.FirebaseUtil
 import com.khtn.ratevid.R
 import com.khtn.ratevid.adapter.ComicAdapter
 import com.khtn.ratevid.adapter.ComicFollowAdapter
@@ -42,9 +43,9 @@ class FollowingListActivity : AppCompatActivity() {
             override fun onItemClick(position: Int) {
 
 
-                    intent= Intent(this@FollowingListActivity,DetailComicActivity::class.java)
-                    intent.putExtra("item",comicArray[position])
-                    intent.putExtra("user",curUser)
+                intent = Intent(this@FollowingListActivity, DetailComicActivity::class.java)
+                intent.putExtra("item", comicArray[position])
+                intent.putExtra("user", curUser)
 
 
                 startActivity(intent)
@@ -53,42 +54,12 @@ class FollowingListActivity : AppCompatActivity() {
     }
 
     private fun loadData() {
-        var followRef= FirebaseDatabase.getInstance().getReference("profile/${curUser.UID}/followComic")
-        var followList= ArrayList<String>()
-        followRef.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()){
-                    followList.clear()
-                    for( id in snapshot.children){
-                        followList.add(id.getValue().toString())
-                        val ref= FirebaseDatabase.getInstance().getReference("comic")
-                        ref.addListenerForSingleValueEvent(object: ValueEventListener {
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                //Xoa list trc khi them vao moi lan vao app
-                                comicArray.clear()
-                                for (item in snapshot.children){
-                                    val modelComic = item.getValue(comicItem::class.java)
-                                    if(modelComic?.id in followList){
-                                        comicArray.add(modelComic!!)
-                                    }
-                                }
-                                heap_sort(comicArray)
-
-                            }
-
-                            override fun onCancelled(error: DatabaseError) {
-                                TODO("Not yet implemented")
-                            }
-                        })
-                    }
-                }else{
-                    comicArray.clear()
-                    adapter.notifyDataSetChanged()
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+        FirebaseUtil.getFollowComic(curUser?.UID!!,object :FirebaseUtil.FirebaseCallbackComicItem{
+            override fun onCallback(arrayComicItem: ArrayList<comicItem>) {
+                comicArray.clear()
+                comicArray.addAll(arrayComicItem)
+                heap_sort(comicArray)
+                adapter.notifyDataSetChanged()
             }
 
         })

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
+import com.khtn.ratevid.FirebaseUtil
 import com.khtn.ratevid.R
 import com.khtn.ratevid.adapter.CommentAdapter
 import com.khtn.ratevid.model.commentItem
@@ -63,21 +64,12 @@ class CommentActivity : AppCompatActivity() {
     }
 
     private fun loadComment() {
-        val ref = FirebaseDatabase.getInstance().getReference("comic/$comicID/comment")
-        ref.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+        FirebaseUtil.readCommentArray(comicID,object: FirebaseUtil.FirebaseCallbackCommentList{
+            override fun onCallback(arrayComment: ArrayList<commentItem>) {
                 ListComment.clear()
-                for (com in snapshot.children){
-                    val modelcomment = com.getValue(commentItem::class.java)
-                    if (modelcomment != null){
-                        ListComment.add(modelcomment)
-                    }
-                }
+                ListComment.addAll(arrayComment)
                 adapterComment.notifyDataSetChanged()
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
             }
         })
     }

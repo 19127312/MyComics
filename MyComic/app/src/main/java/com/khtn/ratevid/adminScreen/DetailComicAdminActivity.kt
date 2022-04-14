@@ -208,9 +208,10 @@ class DetailComicAdminActivity : AppCompatActivity() {
         customListView!!.adapter = adapter
         adapter.setOnItemClickListener(object: ChapterAdapter.onItemClickListener{
             override fun onItemClick(position: Int) {
+                var pos= chapters.size-position;
                 val intent= Intent(this@DetailComicAdminActivity,AddChapter::class.java)
                 intent.putExtra("comicID",comic.id)
-                intent.putExtra("chapterNumber",position+1)
+                intent.putExtra("chapterNumber",pos)
                 intent.putExtra("isUpdate",true)
                 startActivity(intent)
 

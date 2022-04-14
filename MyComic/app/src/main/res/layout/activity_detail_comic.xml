@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="1000dp">
+    android:layout_height="wrap_content">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -44,24 +44,32 @@
         app:layout_constraintStart_toStartOf="@+id/nameComicTV"
         app:layout_constraintTop_toBottomOf="@+id/nameComicTV" />
 
-    <EditText
-        android:fontFamily="@font/poppins_regular"
+    <ScrollView
+        android:id="@+id/SCROLLER_ID"
+        android:layout_width="369dp"
+        android:layout_height="170dp"
+        android:fillViewport="true"
+        android:scrollbars="vertical"
         android:background="@drawable/bd_et"
-        android:id="@+id/descriptionTV"
-        android:layout_width="match_parent"
-        android:layout_height="144dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="25dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:minHeight="48dp"
+
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/authorTV"
-        app:layout_constraintTop_toBottomOf="@+id/authorTV"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/authorTV">
+
+        <TextView
+            android:id="@+id/descriptionTV"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+
+
+            android:ems="10"
+            android:fontFamily="@font/poppins_regular"
+            android:minHeight="48dp"
+            android:scrollbars="vertical"
+
+            tools:ignore="SpeakableTextPresentCheck" />
+    </ScrollView>
+
 
     <ImageView
         android:id="@+id/imageView"
@@ -82,7 +90,7 @@
         android:background="@drawable/bd_button_blue"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionTV" />
+        app:layout_constraintTop_toBottomOf="@+id/SCROLLER_ID" />
 
     <Button
         android:id="@+id/commentBtn"
@@ -97,7 +105,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.56"
         app:layout_constraintStart_toEndOf="@+id/FollowBtn"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionTV" />
+        app:layout_constraintTop_toBottomOf="@+id/SCROLLER_ID" />
 
     <ImageView
         android:id="@+id/likeBtn"
@@ -130,7 +138,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Chapter List"
-        app:layout_constraintStart_toStartOf="@+id/descriptionTV"
+        app:layout_constraintStart_toStartOf="@+id/SCROLLER_ID"
         app:layout_constraintTop_toBottomOf="@+id/FollowBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

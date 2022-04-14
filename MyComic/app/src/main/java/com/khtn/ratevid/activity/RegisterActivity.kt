@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
-    var databaseReference: DatabaseReference?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

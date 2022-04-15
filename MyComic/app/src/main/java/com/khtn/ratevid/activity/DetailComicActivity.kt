@@ -192,6 +192,7 @@ class DetailComicActivity : AppCompatActivity() {
                 val intent = Intent(this@DetailComicActivity, PicListActivity::class.java)
                 intent.putExtra("comicID", comic.id)
                 var pos= chapters.size-position;
+                intent.putExtra("lastChapter",comic.lastestChapter)
                 intent.putExtra("chapterNumber", pos)
                 startActivity(intent)
             }

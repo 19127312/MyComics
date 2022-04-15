@@ -8,10 +8,47 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/picRV"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="412dp"
+        android:layout_height="669dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp"
         tools:listitem="@layout/item_pic" />
+
+    <Button
+        android:id="@+id/nextBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/rounded_btn"
+        android:backgroundTint="@color/icon"
+        android:text="Next"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/picRV" />
+
+    <Button
+        android:id="@+id/preBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/rounded_btn"
+        android:backgroundTint="@color/icon"
+        android:text="Previous"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/picRV" />
+
+    <TextView
+        android:id="@+id/chapterNumberTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/nextBtn"
+        app:layout_constraintStart_toEndOf="@+id/preBtn"
+        app:layout_constraintTop_toBottomOf="@+id/picRV" />
 </androidx.constraintlayout.widget.ConstraintLayout>

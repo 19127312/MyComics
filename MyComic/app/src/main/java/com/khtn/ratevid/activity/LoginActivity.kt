@@ -65,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
             FirebaseUtil.getBannedStatus(currentUser.uid,object: FirebaseUtil.FirebaseCallbackUser{
                 override fun onCallback(user: userItem) {
                     if(user.status=="Banned"){
-                        Toast.makeText(this@LoginActivity,"You have been banned for ${user.reason}",Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@LoginActivity,"You have been banned. Reason: ${user.reason}",Toast.LENGTH_LONG).show()
                         dialog.dismiss()
                     }
                     else if(user.status=="Active"){
@@ -94,7 +94,7 @@ class LoginActivity : AppCompatActivity() {
                     FirebaseUtil.getBannedStatus(status, object :FirebaseUtil.FirebaseCallbackUser{
                         override fun onCallback(user: userItem) {
                             if(user.status=="Banned"){
-                                Toast.makeText(this@LoginActivity,"You have been banned for ${user.reason}",Toast.LENGTH_LONG).show()
+                                Toast.makeText(this@LoginActivity,"You have been banned. Reason: ${user.reason}",Toast.LENGTH_LONG).show()
                                 dialog.dismiss()
                             }
                             else if(user.status=="Active"){

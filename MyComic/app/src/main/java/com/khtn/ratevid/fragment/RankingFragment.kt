@@ -2,10 +2,11 @@ package com.khtn.ratevid.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.khtn.ratevid.FirebaseUtil
@@ -56,6 +57,11 @@ class RankingFragment (user: userItem): Fragment() {
                 comicArray.clear()
                 comicArray.addAll(arrayComicItem)
                 heap_sort(comicArray)
+                if(comicArray.size>10){
+                    var temp= ArrayList<comicItem>(comicArray.subList(0, 9))
+                    comicArray.clear()
+                    comicArray.addAll(temp)
+                }
                 adapter.notifyDataSetChanged()
             }
         })

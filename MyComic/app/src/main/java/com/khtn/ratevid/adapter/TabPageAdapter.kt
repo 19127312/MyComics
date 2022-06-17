@@ -13,8 +13,7 @@ import com.khtn.ratevid.fragment.RankingFragment
 import com.khtn.ratevid.model.userItem
 
 class TabPageAdapter(activity: FragmentActivity, private val tabCount:Int,user: userItem) : FragmentStateAdapter(activity){
-    lateinit var auth: FirebaseAuth
-    var databaseReference: DatabaseReference?=null
+
     var user= user
     override fun getItemCount(): Int {
         return tabCount
@@ -26,7 +25,7 @@ class TabPageAdapter(activity: FragmentActivity, private val tabCount:Int,user: 
         return when(position){
             0-> HomeFragment( user)
             1-> RankingFragment(user)
-            2-> ProfileFragment(user)
+            //2-> ProfileFragment(user)
             else->HomeFragment( user)
         }
     }

@@ -4,6 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Project/MyComic/MyComic/app/src/main/res/layout/activity_detail_comic.xml" value="0.36666666666666664" />
+        <entry key="..\:/Project/MyComic/MyComic/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Project/MyComic/MyComic/app/src/main/res/layout/change_password_dialog.xml" value="0.35104166666666664" />
+        <entry key="..\:/Project/MyComic/MyComic/app/src/main/res/layout/fragment_blank_a.xml" value="0.2838541666666667" />
+        <entry key="..\:/Project/MyComic/MyComic/app/src/main/res/layout/fragment_blank_b.xml" value="0.2838541666666667" />
+        <entry key="..\:/Project/MyComic/MyComic/app/src/main/res/layout/fragment_home.xml" value="0.2838541666666667" />
+        <entry key="..\:/Project/MyComic/MyComic/app/src/main/res/layout/fragment_profile.xml" value="0.2838541666666667" />
+        <entry key="..\:/Project/MyComic/MyComic/app/src/main/res/layout/item_chosen.xml" value="0.36666666666666664" />
+        <entry key="..\:/Project/MyComic/MyComic/app/src/main/res/layout/item_pic.xml" value="0.35104166666666664" />
         <entry key="..\:/Project/RateVid/app/src/main/res/layout/activity_forget_password.xml" value="0.1" />
         <entry key="..\:/Project/RateVid/app/src/main/res/layout/activity_login.xml" value="0.175" />
         <entry key="..\:/Project/RateVid/app/src/main/res/layout/activity_main.xml" value="0.1" />
